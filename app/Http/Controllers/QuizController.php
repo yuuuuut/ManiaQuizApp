@@ -11,6 +11,13 @@ use App\Models\Quiz;
 
 class QuizController extends Controller
 {
+    public function show(Quiz $quiz)
+    {
+        return view('quiz.show', [
+            'quiz' => $quiz,
+        ]);
+    }
+
     public function create()
     {
         return view('quiz.create');

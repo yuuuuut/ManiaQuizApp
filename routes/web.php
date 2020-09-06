@@ -24,3 +24,4 @@ Route::group(['middleware' => ['auth']], function() {
 */
 Route::get('quiz/create', 'QuizController@create')->name('quiz.create');
 Route::post('quizzes', 'QuizController@store')->name('quiz.store');
+Route::get('/quiz/{quiz}', 'QuizController@show')->name('quiz.show');
