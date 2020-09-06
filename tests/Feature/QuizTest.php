@@ -9,7 +9,10 @@ use Tests\TestCase;
 use Socialite;
 use Mockery;
 
-class GoogleLoginTest extends TestCase
+use App\Models\User;
+use App\Models\Quiz;
+
+class QuizTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -30,6 +33,14 @@ class GoogleLoginTest extends TestCase
 
         $this->provider = Mockery::mock('Laravel\Socialite\Contracts\Provider');
         $this->provider->shouldReceive('user')->andReturn($this->user);
+
+        Socialite::shouldReceive('driver')->with('google')->andReturn($this->provider);
+
+        $this->get(route('googleCallBack'))
+            ->assertStatus(302)
+            ->assertRedirect(route('home'));
+
+        $this->u = User::first();
     }
 
     public static function tearDownAfterClass(): void
@@ -40,32 +51,33 @@ class GoogleLoginTest extends TestCase
     /**
      * @test
      */
-    public function Googleの認証画面を表示できる()
+    public function Createページにアクセスできる()
     {
-        $response = $this->get(route('googleLogin'));
-        $response->assertStatus(302);
-
-        $domain = parse_url($response->headers->get('location'));
-        $this->assertEquals('accounts.google.com', $domain['host']);
+        $response = $this->get("/quiz/create");
+        $response->assertStatus(200);
     }
 
     /**
      * @test
      */
-    public function Googleアカウントでユーザー登録できる()
+    public function Quizの作成ができる()
     {
-        Socialite::shouldReceive('driver')->with('google')->andReturn($this->provider);
+        $data = [
+            'user_id' => $this->u->id,
+            'content' => 'Test Content',
+            'level'   => 3,
+        ];
 
-        $this->get(route('googleCallBack'))
-            ->assertStatus(302)
-            ->assertRedirect(route('home'));
+        $response = $this->post(route('quiz.store'), $data);
+        $response->assertStatus(302)
+            ->assertRedirect('/');
         
-        $this->assertDatabaseHas('users', [
-            'uid' => $this->user->getId(),
-            'name' => $this->user->getName(),
-            'avatar' => $this->user->getAvatar()
+        $this->assertEquals(1, Quiz::count());
+        $this->assertDatabaseHas('quizzes', [
+            'user_id' => $this->u->id,
+            'content' => 'Test Content',
+            'level'   => 3,
+            'finish'  => '0',
         ]);
-
-        $this->assertAuthenticated();
     }
 }

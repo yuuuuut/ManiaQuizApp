@@ -17,3 +17,10 @@ Route::get('login/google/callback', 'Auth\LoginController@handleGoogleCallback')
 Route::group(['middleware' => ['auth']], function() {
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 });
+/*
+|--------------------------------------------------------------------------
+| Quiz
+|--------------------------------------------------------------------------
+*/
+Route::get('quiz/create', 'QuizController@create')->name('quiz.create');
+Route::post('quizzes', 'QuizController@store')->name('quiz.store');
