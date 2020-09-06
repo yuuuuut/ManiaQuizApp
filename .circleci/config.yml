@@ -8,7 +8,7 @@ jobs:
         command: mysqld --default-authentication-plugin=mysql_native_password
     environment:
       - APP_DEBUG: true
-      - APP_ENV: local
+      - APP_ENV: testing
       - APP_KEY: base64:IN9JES6vKQ2a7iCpFSeAZPZoHnrgtlXDxXGE7JMqJIw=
       - DB_CONNECTION: circleci
 
