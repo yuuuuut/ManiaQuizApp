@@ -9,6 +9,10 @@
     @foreach($quiz->answers as $answer)
         {{ $answer->content }}
         {{ $answer->user->name }}
+        <form action="{{ route('answer.update', ['id' => $answer->id]) }}" method="post">
+            @csrf
+            <button type="submit">この回答を正解にする</button>
+        </form>
     @endforeach
 
     <form action="{{ route('answer.store') }}" method="post">

@@ -20,4 +20,17 @@ class AnswerController extends Controller
 
         return redirect('/');
     }
+
+    public function update(Request $request, int $id)
+    {
+        $answer = Answer::findOrFail($id);
+        $answer->hit = true;
+        $answer->save();
+
+        $quiz = $answer->quiz;
+        $quiz->finish = true;
+        $quiz->save();
+
+        return redirect('/');
+    }
 }

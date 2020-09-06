@@ -54,7 +54,8 @@ class AnswerTest extends TestCase
      */
     public function Answerの作成ができる()
     {
-        $quiz = factory(Quiz::class)->create();
+        factory(Quiz::class)->create();
+        $quiz = Quiz::first();
 
         $response = $this->get("/quiz/$quiz->id");
         $response->assertStatus(200);
@@ -75,6 +76,42 @@ class AnswerTest extends TestCase
             'quiz_id' => $quiz->id,
             'content' => 'Test Content',
             'hit'  => '0',
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function Answerをupdateできる()
+    {
+        $this->Answerの作成ができる();
+
+        $answer = Answer::first();
+        $quiz = Quiz::first();
+
+        $this->assertDatabaseHas('quizzes', [
+            'user_id' => $quiz->user_id,
+            'content' => $quiz->content,
+            'level'   => $quiz->level,
+            'finish'  => '0',
+        ]);
+
+        $response = $this->post(route('answer.update', $answer->id));
+        $response->assertStatus(302)
+            ->assertRedirect('/');
+        
+        $this->assertDatabaseHas('answers', [
+            'user_id' => $this->u->id,
+            'quiz_id' => $quiz->id,
+            'content' => 'Test Content',
+            'hit'  => '1',
+        ]);
+
+        $this->assertDatabaseHas('quizzes', [
+            'user_id' => $quiz->user_id,
+            'content' => $quiz->content,
+            'level'   => $quiz->level,
+            'finish'  => '1',
         ]);
     }
 }
