@@ -35,15 +35,9 @@ class QuizController extends Controller
 
     public function store(Request $request)
     {
-        $quiz = new Quiz();
-        $quiz->user_id = Auth::id();
-        $quiz->content = $request->input('content');
-        $quiz->level   = $request->input('level');
-        $quiz->save();
+        Quiz::create($request->all());
 
-        $performance = Performance::where('user_id', Auth::id())->first();
-        $performance->number_of_quizzes = $performance->number_of_quizzes + 1;
-        $performance->save();
+        Performance::addNumberOfQuizzes();
 
         return redirect('/');
     }
