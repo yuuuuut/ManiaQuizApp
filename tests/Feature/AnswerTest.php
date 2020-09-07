@@ -118,5 +118,10 @@ class AnswerTest extends TestCase
             'level'   => $quiz->level,
             'finish'  => '1',
         ]);
+
+        $this->assertDatabaseHas('performances', [
+            'user_id' => $user->id,
+            'number_of_correct_answers' => 1,
+        ]);
     }
 }

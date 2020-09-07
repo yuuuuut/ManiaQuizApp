@@ -19,9 +19,10 @@ class AnswerController extends Controller
         return redirect('/');
     }
 
-    public function update(Request $request, string $id)
+    public function update(string $id)
     {
         Answer::correctTheQuiz($id);
+        Performance::addNumberOfCorrectAnswers($id);
 
         return redirect('/');
     }
