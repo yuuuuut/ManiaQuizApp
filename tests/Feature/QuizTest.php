@@ -39,8 +39,6 @@ class QuizTest extends TestCase
         $this->get(route('googleCallBack'))
             ->assertStatus(302)
             ->assertRedirect(route('home'));
-
-        $this->u = User::first();
     }
 
     public static function tearDownAfterClass(): void
@@ -82,8 +80,9 @@ class QuizTest extends TestCase
      */
     public function Quizの作成ができる()
     {
+        $user = User::first();
         $data = [
-            'user_id' => $this->u->id,
+            'user_id' => $user->id,
             'content' => 'Test Content',
             'level'   => 3,
         ];
@@ -94,10 +93,15 @@ class QuizTest extends TestCase
         
         $this->assertEquals(1, Quiz::count());
         $this->assertDatabaseHas('quizzes', [
-            'user_id' => $this->u->id,
+            'user_id' => $user->id,
             'content' => 'Test Content',
             'level'   => 3,
             'finish'  => '0',
+        ]);
+
+        $this->assertDatabaseHas('performances', [
+            'user_id' => $user->id,
+            'number_of_quizzes' => 1,
         ]);
     }
 }

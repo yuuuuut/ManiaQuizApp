@@ -8,6 +8,7 @@ use Auth;
 
 use App\Models\User;
 use App\Models\Quiz;
+use App\Models\Performance;
 
 class QuizController extends Controller
 {
@@ -39,6 +40,10 @@ class QuizController extends Controller
         $quiz->content = $request->input('content');
         $quiz->level   = $request->input('level');
         $quiz->save();
+
+        $performance = Performance::where('user_id', Auth::id())->first();
+        $performance->number_of_quizzes = $performance->number_of_quizzes + 1;
+        $performance->save();
 
         return redirect('/');
     }
