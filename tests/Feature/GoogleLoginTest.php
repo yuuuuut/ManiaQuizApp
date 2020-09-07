@@ -9,6 +9,8 @@ use Tests\TestCase;
 use Socialite;
 use Mockery;
 
+use App\Models\User;
+
 class GoogleLoginTest extends TestCase
 {
     use RefreshDatabase;
@@ -64,6 +66,12 @@ class GoogleLoginTest extends TestCase
             'uid' => $this->user->getId(),
             'name' => $this->user->getName(),
             'avatar' => $this->user->getAvatar()
+        ]);
+
+        $user = User::first();
+
+        $this->assertDatabaseHas('performances', [
+            'user_id' => $user->id,
         ]);
 
         $this->assertAuthenticated();

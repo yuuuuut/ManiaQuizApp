@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * performanceテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function performance()
+    {
+        return $this->hasOne('App\Models\Performance');
+    }
 }

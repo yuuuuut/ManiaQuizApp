@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 
 use App\Models\User;
+use App\Models\Performance;
 
 class LoginController extends Controller
 {
@@ -46,9 +47,15 @@ class LoginController extends Controller
     {
         $google_user = Socialite::driver('google')->user();
 
-        $user = User::updateOrCreate(['uid' => $google_user->getId()],[
+        $user = User::updateOrCreate([
+            'uid' => $google_user->getId()
+        ],[
             'name' => $google_user->getName(),
             'avatar' => $google_user->getAvatar(),
+        ]);
+
+        Performance::firstOrCreate([
+            'user_id' => $user->id
         ]);
 
         \Auth::login($user);
