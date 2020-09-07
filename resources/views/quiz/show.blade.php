@@ -17,6 +17,7 @@
 
     <form action="{{ route('answer.store') }}" method="post">
         @csrf
+        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
         <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
         <input type="text" name="content">
         <button type="submit">作成</button>

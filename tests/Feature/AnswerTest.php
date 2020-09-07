@@ -40,8 +40,6 @@ class AnswerTest extends TestCase
         $this->get(route('googleCallBack'))
             ->assertStatus(302)
             ->assertRedirect(route('home'));
-
-        $this->u = User::first();
     }
 
     public static function tearDownAfterClass(): void
@@ -56,12 +54,13 @@ class AnswerTest extends TestCase
     {
         factory(Quiz::class)->create();
         $quiz = Quiz::first();
+        $user = User::first();
 
         $response = $this->get("/quiz/$quiz->id");
         $response->assertStatus(200);
 
         $data = [
-            'user_id' => $this->u->id,
+            'user_id' => $user->id,
             'quiz_id' => $quiz->id,
             'content' => 'Test Content',
         ];
@@ -72,7 +71,7 @@ class AnswerTest extends TestCase
         
         $this->assertEquals(1, Answer::count());
         $this->assertDatabaseHas('answers', [
-            'user_id' => $this->u->id,
+            'user_id' => $user->id,
             'quiz_id' => $quiz->id,
             'content' => 'Test Content',
             'hit'  => '0',
@@ -88,6 +87,7 @@ class AnswerTest extends TestCase
 
         $answer = Answer::first();
         $quiz = Quiz::first();
+        $user = User::first();
 
         $this->assertDatabaseHas('quizzes', [
             'user_id' => $quiz->user_id,
@@ -101,7 +101,7 @@ class AnswerTest extends TestCase
             ->assertRedirect('/');
         
         $this->assertDatabaseHas('answers', [
-            'user_id' => $this->u->id,
+            'user_id' => $user->id,
             'quiz_id' => $quiz->id,
             'content' => 'Test Content',
             'hit'  => '1',

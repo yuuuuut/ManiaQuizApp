@@ -12,11 +12,7 @@ class AnswerController extends Controller
 {
     public function store(Request $request)
     {
-        $answer = new Answer();
-        $answer->user_id = Auth::id();
-        $answer->quiz_id = $request->input('quiz_id');
-        $answer->content = $request->input('content');
-        $answer->save();
+        Answer::create($request->all());
 
         return redirect('/');
     }

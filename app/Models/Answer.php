@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
+    protected $fillable = [
+        'user_id', 'quiz_id', 'content',
+    ];
+
     /**
      * quizzesテーブル
      * @return \Illuminate\Database\Eloquent\Relations\belongTo
