@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateAnswerRequest;
 
 use Auth;
 
@@ -11,7 +12,7 @@ use App\Models\Performance;
 
 class AnswerController extends Controller
 {
-    public function store(Request $request)
+    public function store(CreateAnswerRequest $request)
     {
         Answer::create($request->all());
         Performance::addNumberOfAnswers();
