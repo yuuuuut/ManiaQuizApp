@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('login');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 /*
@@ -22,6 +20,7 @@ Route::group(['middleware' => ['auth']], function() {
 | Quiz
 |--------------------------------------------------------------------------
 */
+Route::get('/', 'QuizController@index')->name('quiz.index');
 Route::get('quiz/create', 'QuizController@create')->name('quiz.create');
 Route::post('quizzes', 'QuizController@store')->name('quiz.store');
 Route::get('/quiz/{quiz}', 'QuizController@show')->name('quiz.show');

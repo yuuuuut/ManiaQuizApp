@@ -51,6 +51,15 @@ class QuizTest extends TestCase
     /**
      * @test
      */
+    public function Indexページにアクセスできる()
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
     public function Showページにアクセスできる()
     {
         $quiz = factory(Quiz::class)->create();

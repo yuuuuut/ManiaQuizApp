@@ -11,6 +11,15 @@ use App\Models\Quiz;
 
 class QuizController extends Controller
 {
+    public function index()
+    {
+        $quizzes = Quiz::paginate(2);
+
+        return view('quiz.index', [
+            'quizzes' => $quizzes
+        ]);
+    }
+
     public function show(Quiz $quiz)
     {
         return view('quiz.show', [
