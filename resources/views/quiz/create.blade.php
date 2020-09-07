@@ -2,6 +2,13 @@
 
 @section('content')
 <div>
+    @if(count($errors) > 0)
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+    @endif
     <form action="{{ route('quiz.store') }}" method="post">
         @csrf
         <input type="hidden" name="user_id" value="{{ Auth::id() }}">

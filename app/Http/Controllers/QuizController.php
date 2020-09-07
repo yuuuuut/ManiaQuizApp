@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateQuizRequest;
 
 use Auth;
 
@@ -33,7 +34,7 @@ class QuizController extends Controller
         return view('quiz.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateQuizRequest $request)
     {
         Quiz::create($request->all());
 
