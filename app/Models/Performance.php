@@ -21,4 +21,14 @@ class Performance extends Model
         $authPer->number_of_quizzes = $authPer->number_of_quizzes + 1;
         $authPer->save();
     }
+
+    /**
+     * number_of_answersを+1する
+     */
+    public static function addNumberOfAnswers()
+    {
+        $authPer = Performance::where('user_id', Auth::id())->first();
+        $authPer->number_of_answers = $authPer->number_of_answers + 1;
+        $authPer->save();
+    }
 }

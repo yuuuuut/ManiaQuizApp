@@ -76,6 +76,11 @@ class AnswerTest extends TestCase
             'content' => 'Test Content',
             'hit'  => '0',
         ]);
+
+        $this->assertDatabaseHas('performances', [
+            'user_id' => $user->id,
+            'number_of_answers' => 1,
+        ]);
     }
 
     /**
