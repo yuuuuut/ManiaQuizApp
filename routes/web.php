@@ -31,3 +31,9 @@ Route::get('/quiz/{quiz}', 'QuizController@show')->name('quiz.show');
 */
 Route::post('answers', 'AnswerController@store')->name('answer.store');
 Route::post('answers/{id}/', 'AnswerController@update')->name('answer.update');
+/*
+|--------------------------------------------------------------------------
+| User
+|--------------------------------------------------------------------------
+*/
+Route::get('/users/{user}', 'UserController@show')->name('user.show');
