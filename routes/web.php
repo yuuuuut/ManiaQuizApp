@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-
 Route::get('/home', 'HomeController@index')->name('home');
 /*
 |--------------------------------------------------------------------------
@@ -20,17 +18,21 @@ Route::group(['middleware' => ['auth']], function() {
 | Quiz
 |--------------------------------------------------------------------------
 */
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('quiz/create', 'QuizController@create')->name('quiz.create');
+    Route::post('quizzes', 'QuizController@store')->name('quiz.store');
+});
 Route::get('/', 'QuizController@index')->name('quiz.index');
-Route::get('quiz/create', 'QuizController@create')->name('quiz.create');
-Route::post('quizzes', 'QuizController@store')->name('quiz.store');
 Route::get('/quiz/{quiz}', 'QuizController@show')->name('quiz.show');
 /*
 |--------------------------------------------------------------------------
 | Answer
 |--------------------------------------------------------------------------
 */
-Route::post('answers', 'AnswerController@store')->name('answer.store');
-Route::post('answers/{id}/', 'AnswerController@update')->name('answer.update');
+Route::group(['middleware' => ['auth']], function() {
+    Route::post('answers', 'AnswerController@store')->name('answer.store');
+    Route::post('answers/{id}/', 'AnswerController@update')->name('answer.update');
+});
 /*
 |--------------------------------------------------------------------------
 | User
