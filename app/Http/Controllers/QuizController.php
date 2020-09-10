@@ -11,12 +11,15 @@ use App\Models\Performance;
 
 class QuizController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $quizzes = Quiz::paginate(2);
+        $category_id = $request->category_id;
+
+        $quizzes = Quiz::categoryAt($category_id)->paginate(3);
 
         return view('quiz.index', [
-            'quizzes' => $quizzes
+            'quizzes' => $quizzes,
+            'category_id' => $category_id,
         ]);
     }
 

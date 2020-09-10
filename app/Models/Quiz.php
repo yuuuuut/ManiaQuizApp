@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Quiz extends Model
 {
     protected $fillable = [
-        'user_id', 'category_id', 'content', 'level',
+        'user_id',
+        'category_id',
+        'content',
+        'level',
     ];
 
     /**
@@ -26,5 +29,17 @@ class Quiz extends Model
     public function category()
     {
         return $this->belongsTo('App\Models\Category');
+    }
+
+    /**
+     * カテゴリスコープ
+     */
+    public function scopeCategoryAt($query, $category_id)
+    {
+        if (empty($category_id)) {
+            return;
+        }
+
+        return $query->where('category_id', $category_id);
     }
 }
