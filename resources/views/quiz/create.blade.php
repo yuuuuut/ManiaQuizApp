@@ -14,6 +14,13 @@
         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
         <input type="text" name="content">
         <input type="number" name="level">
+        <select
+            name="category_id"
+        >
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
         <button type="submit">作成</button>
     </form>
 </div>

@@ -9,6 +9,7 @@ use Tests\TestCase;
 use Socialite;
 use Mockery;
 
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Quiz;
 
@@ -80,11 +81,13 @@ class QuizTest extends TestCase
      */
     public function Quizの作成ができる()
     {
+        $category_id = factory(Category::class)->create()->id;
         $user = User::first();
         $data = [
-            'user_id' => $user->id,
-            'content' => 'Test Content',
-            'level'   => 3,
+            'user_id'     => $user->id,
+            'category_id' => $category_id,
+            'content'     => 'Test Content',
+            'level'       => 3,
         ];
 
         $response = $this->post(route('quiz.store'), $data);
@@ -93,10 +96,11 @@ class QuizTest extends TestCase
         
         $this->assertEquals(1, Quiz::count());
         $this->assertDatabaseHas('quizzes', [
-            'user_id' => $user->id,
-            'content' => 'Test Content',
-            'level'   => 3,
-            'finish'  => '0',
+            'user_id'     => $user->id,
+            'category_id' => $category_id,
+            'content'     => 'Test Content',
+            'level'       => 3,
+            'finish'      => '0',
         ]);
 
         $this->assertDatabaseHas('performances', [

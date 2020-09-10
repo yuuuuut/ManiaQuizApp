@@ -4,6 +4,7 @@
 <div>
     @foreach($quizzes as $quiz)
         {{ $quiz->content }}
+        {{ $quiz->category->name }}
         <a href="/quiz/{{ $quiz->id }}">回答する</a>
         <br>
     @endforeach
