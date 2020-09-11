@@ -19,7 +19,7 @@ class LoginController extends Controller
      * Where to redirect users after login.
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -59,7 +59,7 @@ class LoginController extends Controller
         ]);
 
         \Auth::login($user);
-        return redirect('/home');
+        return redirect('/');
     }
 
     /**

@@ -38,7 +38,7 @@ class UserTest extends TestCase
 
         $this->get(route('googleCallBack'))
             ->assertStatus(302)
-            ->assertRedirect(route('home'));
+            ->assertRedirect(route('quiz.index'));
 
         $this->u = User::first();
     }

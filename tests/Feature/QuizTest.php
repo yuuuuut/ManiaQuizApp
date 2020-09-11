@@ -40,7 +40,7 @@ class QuizTest extends TestCase
 
         $this->get(route('googleCallBack'))
             ->assertStatus(302)
-            ->assertRedirect(route('home'));
+            ->assertRedirect(route('quiz.index'));
     }
 
     public static function tearDownAfterClass(): void

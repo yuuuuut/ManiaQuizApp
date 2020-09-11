@@ -58,9 +58,9 @@ class GoogleLoginTest extends TestCase
     {
         Socialite::shouldReceive('driver')->with('google')->andReturn($this->provider);
 
-        $this->get(route('googleCallBack'))
-            ->assertStatus(302)
-            ->assertRedirect(route('home'));
+        $response = $this->get(route('googleCallBack'))
+                        ->assertStatus(302)
+                        ->assertRedirect(route('quiz.index'));
         
         $this->assertDatabaseHas('users', [
             'uid' => $this->user->getId(),
