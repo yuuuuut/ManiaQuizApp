@@ -9,6 +9,8 @@ use Auth;
 
 use App\Models\Answer;
 use App\Models\Performance;
+use App\Models\Notification;
+
 
 class AnswerController extends Controller
 {
@@ -16,6 +18,7 @@ class AnswerController extends Controller
     {
         Answer::create($request->all());
         Performance::addNumberOfAnswers();
+        Notification::createNotifiCreateAnswer($request->quiz_id);
 
         return redirect('/');
     }

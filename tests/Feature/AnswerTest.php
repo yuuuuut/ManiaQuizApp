@@ -54,7 +54,14 @@ class AnswerTest extends TestCase
     {
         factory(Quiz::class)->create();
         $quiz = Quiz::first();
-        $user = User::first();
+
+        $users = User::all();
+        foreach($users as $user) {
+            $users[] = $user;
+        }
+
+        $user  = $users[0];
+        $user2 = $users[1];
 
         $response = $this->get("/quiz/$quiz->id");
         $response->assertStatus(200);
@@ -80,6 +87,13 @@ class AnswerTest extends TestCase
         $this->assertDatabaseHas('performances', [
             'user_id' => $user->id,
             'number_of_answers' => 1,
+        ]);
+
+        $this->assertDatabaseHas('notifications', [
+            'visiter_id' => $user->id,
+            'visited_id' => $user2->id,
+            'quiz_id' => $quiz->id,
+            'action' => 'AnswerStore'
         ]);
     }
 
