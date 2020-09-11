@@ -10,6 +10,7 @@ use Socialite;
 use Mockery;
 
 use App\Models\Category;
+use App\Models\Answer;
 use App\Models\User;
 use App\Models\Quiz;
 
@@ -65,6 +66,28 @@ class QuizTest extends TestCase
 
         $response = $this->get("/quiz/$quiz->id");
         $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function auth_answerアクセサが正しく機能する()
+    {
+        //Answerの作成
+        $quiz = factory(Quiz::class)->create();
+
+        $data = [
+            'user_id' => \Auth::id(),
+            'quiz_id' => $quiz->id,
+            'content' => 'Test Content',
+        ];
+
+        $response = $this->post(route('answer.store'), $data);
+        $response->assertStatus(302)
+            ->assertRedirect('/');
+        
+        $result = $quiz->auth_answer;
+        $this->assertTrue($result);
     }
 
     /**

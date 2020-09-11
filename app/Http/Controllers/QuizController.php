@@ -25,8 +25,11 @@ class QuizController extends Controller
 
     public function show(Quiz $quiz)
     {
+        $is_auth_answer = $quiz->auth_answer;
+
         return view('quiz.show', [
             'quiz' => $quiz,
+            'is_auth_answer' => $is_auth_answer,
         ]);
     }
 

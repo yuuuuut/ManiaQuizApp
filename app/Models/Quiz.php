@@ -44,4 +44,19 @@ class Quiz extends Model
 
         return $query->where('category_id', $category_id);
     }
+
+    /**
+     * アクセサ
+     * @return Boolean
+     */
+    public function getAuthAnswerAttribute()
+    {
+        if (Auth::guest()) {
+            return false;
+        }
+
+        return $this->answers->contains(function ($answer) {
+            return $answer->user_id === Auth::id();
+        });
+    }
 }
