@@ -17,14 +17,16 @@
         @endif
     @endforeach
 
-    @if($quiz->user_id !== Auth::id())
-    <form action="{{ route('answer.store') }}" method="post">
-        @csrf
-        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-        <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
-        <input type="text" name="content">
-        <button type="submit">作成</button>
-    </form>
+    @if($is_auth_answer)
+        回答済みです
+    @elseif($quiz->user_id !== Auth::id())
+        <form action="{{ route('answer.store') }}" method="post">
+            @csrf
+            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+            <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
+            <input type="text" name="content">
+            <button type="submit">作成</button>
+        </form>
     @endif
 </div>
 @endsection
