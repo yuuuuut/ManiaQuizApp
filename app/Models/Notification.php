@@ -18,6 +18,24 @@ class Notification extends Model
     ];
 
     /**
+     * usersテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function quiz()
+    {
+        return $this->belongsTo('App\Models\Quiz', 'quiz_id', 'id');
+    }
+
+    /**
+     * usersテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function visiter()
+    {
+        return $this->belongsTo('App\Models\User', 'visiter_id', 'id');
+    }
+
+    /**
      * AnswerのCreate時に通知作成
      * 
      * @param string $quiz_id QuizId
