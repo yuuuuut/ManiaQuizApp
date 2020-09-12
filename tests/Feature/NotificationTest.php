@@ -11,7 +11,7 @@ use Mockery;
 
 use App\Models\User;
 
-class UserTest extends TestCase
+class NotificationTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -38,8 +38,6 @@ class UserTest extends TestCase
         $this->get(route('googleCallBack'))
             ->assertStatus(302)
             ->assertRedirect(route('quiz.index'));
-
-        $this->u = User::first();
     }
 
     public static function tearDownAfterClass(): void
@@ -50,11 +48,9 @@ class UserTest extends TestCase
     /**
      * @test
      */
-    public function showページにアクセスできる()
+    public function indexページにアクセスできる()
     {
-        $id = $this->u->id;
-
-        $response = $this->get("/users/$id");
+        $response = $this->get("/notification");
         $response->assertStatus(200);
     }
 }
