@@ -62,7 +62,8 @@ class QuizTest extends TestCase
      */
     public function Showページにアクセスできる()
     {
-        $quiz = factory(Quiz::class)->create();
+        $user = User::first();
+        $quiz = factory(Quiz::class)->create(['user_id' => $user->id ]);
 
         $response = $this->get("/quiz/$quiz->id");
         $response->assertStatus(200);
@@ -74,7 +75,8 @@ class QuizTest extends TestCase
     public function auth_answerアクセサが正しく機能する()
     {
         //Answerの作成
-        $quiz = factory(Quiz::class)->create();
+        $user = User::first();
+        $quiz = factory(Quiz::class)->create(['user_id' => $user->id ]);
 
         $data = [
             'user_id' => \Auth::id(),

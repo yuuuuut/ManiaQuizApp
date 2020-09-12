@@ -12,6 +12,7 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         factory(App\Models\User::class)->create()->each(function ($user) {
+            factory(App\Models\Quiz::class)->create(['user_id' => $user->id ]);
             factory(App\Models\Performance::class)->create(['user_id' => $user->id ]);
         });
     }

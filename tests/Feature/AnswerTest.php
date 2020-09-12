@@ -53,15 +53,15 @@ class AnswerTest extends TestCase
      */
     public function Answerの作成ができる()
     {
-        factory(Quiz::class)->create();
-        $quiz = Quiz::first();
-
         $users = User::all();
         foreach($users as $user) {
             $users[] = $user;
         }
         $user  = $users[0];
         $user2 = $users[1];
+
+        factory(Quiz::class)->create(['user_id' => $user->id ]);
+        $quiz = Quiz::first();
 
         $response = $this->get("/quiz/$quiz->id");
         $response->assertStatus(200);
@@ -103,15 +103,15 @@ class AnswerTest extends TestCase
      */
     public function Answerをupdateできる()
     {
-        factory(Quiz::class)->create();
-        $quiz = Quiz::first();
-
         $users = User::all();
         foreach($users as $user) {
             $users[] = $user;
         }
         $user  = $users[0];
         $user2 = $users[1];
+
+        factory(Quiz::class)->create(['user_id' => $user->id ]);
+        $quiz = Quiz::first();
 
         factory(Performance::class)->create(['user_id' => $user2->id ]);
 

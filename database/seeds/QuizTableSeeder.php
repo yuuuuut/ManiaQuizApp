@@ -11,6 +11,6 @@ class QuizTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Quiz::class)->create();
+        //factory(App\Models\Quiz::class)->create();
     }
 }
