@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 
 use App\Models\Quiz;
+use App\Models\Answer;
 
 class Notification extends Model
 {
@@ -16,6 +17,11 @@ class Notification extends Model
         'action',
     ];
 
+    /**
+     * AnswerのCreate時に通知作成
+     * 
+     * @param string $quiz_id QuizId
+     */
     public static function createNotifiCreateAnswer($quiz_id)
     {
         $quiz = Quiz::findOrFail($quiz_id);
@@ -24,7 +30,24 @@ class Notification extends Model
             'visiter_id' => Auth::id(),
             'visited_id' => $quiz->user_id,
             'quiz_id' => $quiz_id,
-            'action' => 'AnswerStore',
+            'action'  => 'AnswerStore',
+        ]);
+    }
+
+    /**
+     * Answerのupdate時に通知作成
+     * 
+     * @param string $answer_id AnswerID
+     */
+    public static function createNotifiUpdateAnswer($answer_id)
+    {
+        $answer = Answer::findOrFail($answer_id);
+
+        Notification::firstOrCreate([
+            'visiter_id' => Auth::id(),
+            'visited_id' => $answer->user_id,
+            'quiz_id' => $answer->quiz->id,
+            'action' => 'BestAnswer',
         ]);
     }
 }

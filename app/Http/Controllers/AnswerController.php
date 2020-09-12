@@ -27,6 +27,7 @@ class AnswerController extends Controller
     {
         Answer::correctTheQuiz($id);
         Performance::addNumberOfCorrectAnswers($id);
+        Notification::createNotifiUpdateAnswer($id);
 
         return redirect('/');
     }

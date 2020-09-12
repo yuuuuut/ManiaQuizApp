@@ -12,6 +12,7 @@ use Mockery;
 use App\Models\User;
 use App\Models\Quiz;
 use App\Models\Answer;
+use App\Models\Performance;
 
 class AnswerTest extends TestCase
 {
@@ -59,7 +60,6 @@ class AnswerTest extends TestCase
         foreach($users as $user) {
             $users[] = $user;
         }
-
         $user  = $users[0];
         $user2 = $users[1];
 
@@ -77,6 +77,7 @@ class AnswerTest extends TestCase
             ->assertRedirect('/');
         
         $this->assertEquals(1, Answer::count());
+
         $this->assertDatabaseHas('answers', [
             'user_id' => $user->id,
             'quiz_id' => $quiz->id,
@@ -102,40 +103,54 @@ class AnswerTest extends TestCase
      */
     public function Answerをupdateできる()
     {
-        $this->Answerの作成ができる();
+        factory(Quiz::class)->create();
+        $quiz = Quiz::first();
+
+        $users = User::all();
+        foreach($users as $user) {
+            $users[] = $user;
+        }
+        $user  = $users[0];
+        $user2 = $users[1];
+
+        factory(Performance::class)->create(['user_id' => $user2->id ]);
+
+        $response = $this->get("/quiz/$quiz->id");
+        $response->assertStatus(200);
+
+        $data = [
+            'user_id' => $user2->id,
+            'quiz_id' => $quiz->id,
+            'content' => 'Test Content',
+        ];
+
+        $response = $this->post(route('answer.store'), $data);
+        $response->assertStatus(302)
+            ->assertRedirect('/');
 
         $answer = Answer::first();
-        $quiz = Quiz::first();
-        $user = User::first();
-
-        $this->assertDatabaseHas('quizzes', [
-            'user_id' => $quiz->user_id,
-            'content' => $quiz->content,
-            'level'   => $quiz->level,
-            'finish'  => '0',
-        ]);
 
         $response = $this->post(route('answer.update', $answer->id));
         $response->assertStatus(302)
             ->assertRedirect('/');
         
         $this->assertDatabaseHas('answers', [
-            'user_id' => $user->id,
+            'user_id' => $user2->id,
             'quiz_id' => $quiz->id,
             'content' => 'Test Content',
             'hit'  => '1',
         ]);
 
-        $this->assertDatabaseHas('quizzes', [
-            'user_id' => $quiz->user_id,
-            'content' => $quiz->content,
-            'level'   => $quiz->level,
-            'finish'  => '1',
+        $this->assertDatabaseHas('performances', [
+            'user_id' => $user2->id,
+            'number_of_correct_answers' => 1,
         ]);
 
-        $this->assertDatabaseHas('performances', [
-            'user_id' => $user->id,
-            'number_of_correct_answers' => 1,
+        $this->assertDatabaseHas('notifications', [
+            'visiter_id' => $user->id,
+            'visited_id' => $user2->id,
+            'quiz_id' => $quiz->id,
+            'action' => 'BestAnswer'
         ]);
     }
 }
