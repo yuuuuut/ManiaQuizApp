@@ -18,7 +18,7 @@ class AnswerController extends Controller
     {
         Answer::create($request->all());
         Performance::addNumberOfAnswers();
-        Notification::createNotifiCreateAnswer($request->quiz_id);
+        Notification::notifiCreateAnswer($request->quiz_id);
 
         return redirect('/');
     }
@@ -27,8 +27,8 @@ class AnswerController extends Controller
     {
         Answer::correctTheQuiz($id);
         Performance::addNumberOfCorrectAnswers($id);
-        Notification::createNotifiUpdateAnswer($id);
-        Notification::createNotifiUpdateNoneAnswer($id);
+        Notification::notifiUpdateAnswer($id);
+        Notification::notifiUpdateNoneAnswer($id);
 
         return redirect('/');
     }

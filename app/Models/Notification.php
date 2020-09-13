@@ -40,7 +40,7 @@ class Notification extends Model
      * 
      * @param string $quiz_id QuizId
      */
-    public static function createNotifiCreateAnswer($quiz_id)
+    public static function notifiCreateAnswer($quiz_id)
     {
         $quiz = Quiz::findOrFail($quiz_id);
 
@@ -57,7 +57,7 @@ class Notification extends Model
      * 
      * @param string $answer_id AnswerID
      */
-    public static function createNotifiUpdateAnswer($answer_id)
+    public static function updateAnswer($answer_id)
     {
         $answer = Answer::findOrFail($answer_id);
 
@@ -70,11 +70,11 @@ class Notification extends Model
     }
 
     /**
-     * Answerのupdate時に通知作成
+     * Answerのupdate時にNoneBestAnswer通知作成
      * 
      * @param string $answer_id AnswerID
      */
-    public static function createNotifiUpdateNoneAnswer($answer_id)
+    public static function notifiUpdateNoneAnswer($answer_id)
     {
         $answer = Answer::findOrFail($answer_id);
         $quiz   = Quiz::findOrFail($answer->quiz_id);
