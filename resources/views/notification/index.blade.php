@@ -11,6 +11,10 @@
             があなたの問題に回答しました。
         </a>
         {{ $notifi->quiz->content }}
+    @elseif($notifi->action === 'BestAnswer')
+        <a href="{{ route('quiz.show', ['quiz' => $notifi->quiz_id]) }}">
+            あなたの回答が正解に選ばれました。
+        </a>
     @endif
 @endforeach
 
