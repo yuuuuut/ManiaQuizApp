@@ -8,8 +8,11 @@ use Tests\TestCase;
 
 use Socialite;
 use Mockery;
+use Auth;
 
-class NotificationTest extends TestCase
+use App\Models\Category;
+
+class FollowCategoryTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -46,9 +49,22 @@ class NotificationTest extends TestCase
     /**
      * @test
      */
-    public function indexページにアクセスできる()
+    public function Categoryのフォローができる()
     {
-        $response = $this->get("/notification");
-        $response->assertStatus(200);
+        $category_id = factory(Category::class)->create()->id;
+
+        $data = [
+            'user_id'     => Auth::id(),
+            'category_id' => $category_id,
+        ];
+
+        $response = $this->post(route('follow.category'), $data);
+        $response->assertStatus(302)
+                ->assertRedirect('/');
+        
+        $this->assertDatabaseHas('follow_categories', [
+            'user_id' => Auth::id(),
+            'category_id' => $category_id,
+        ]);
     }
 }

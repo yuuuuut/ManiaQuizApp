@@ -34,6 +34,15 @@ Route::group(['middleware' => ['auth']], function() {
 });
 /*
 |--------------------------------------------------------------------------
+| Category
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/category', 'CategoryController@index')->name('category.index');
+    Route::post('/category', 'FollowCategoryController@store')->name('follow.category');
+});
+/*
+|--------------------------------------------------------------------------
 | Notification
 |--------------------------------------------------------------------------
 */
