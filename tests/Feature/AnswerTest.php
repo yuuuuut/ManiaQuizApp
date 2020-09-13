@@ -63,9 +63,6 @@ class AnswerTest extends TestCase
         factory(Quiz::class)->create(['user_id' => $user->id ]);
         $quiz = Quiz::first();
 
-        $response = $this->get("/quiz/$quiz->id");
-        $response->assertStatus(200);
-
         $data = [
             'user_id' => $user->id,
             'quiz_id' => $quiz->id,
@@ -103,37 +100,43 @@ class AnswerTest extends TestCase
      */
     public function Answerをupdateできる()
     {
+        // User取得
         $users = User::all();
         foreach($users as $user) {
             $users[] = $user;
         }
         $user  = $users[0];
         $user2 = $users[1];
-
+        // Quiz作成・取得
         factory(Quiz::class)->create(['user_id' => $user->id ]);
         $quiz = Quiz::first();
-
+        // $user2のPerformance作成
         factory(Performance::class)->create(['user_id' => $user2->id ]);
-
-        $response = $this->get("/quiz/$quiz->id");
-        $response->assertStatus(200);
-
+        // BestAnswerの用意・作成
         $data = [
             'user_id' => $user2->id,
             'quiz_id' => $quiz->id,
             'content' => 'Test Content',
         ];
-
         $response = $this->post(route('answer.store'), $data);
         $response->assertStatus(302)
-            ->assertRedirect('/');
-
+                ->assertRedirect('/');
+        // NoneBestAnswerの用意・作成
+        $data = [
+            'user_id' => $user2->id,
+            'quiz_id' => $quiz->id,
+            'content' => 'Test Content',
+        ];
+        $response = $this->post(route('answer.store'), $data);
+        $response->assertStatus(302)
+                ->assertRedirect('/');
+        // Answerの取得
         $answer = Answer::first();
-
+        // Answerのupdate
         $response = $this->post(route('answer.update', $answer->id));
         $response->assertStatus(302)
             ->assertRedirect('/');
-        
+        // DB状態確認
         $this->assertDatabaseHas('answers', [
             'user_id' => $user2->id,
             'quiz_id' => $quiz->id,
@@ -151,6 +154,13 @@ class AnswerTest extends TestCase
             'visited_id' => $user2->id,
             'quiz_id' => $quiz->id,
             'action' => 'BestAnswer'
+        ]);
+
+        $this->assertDatabaseHas('notifications', [
+            'visiter_id' => $user->id,
+            'visited_id' => $user2->id,
+            'quiz_id' => $quiz->id,
+            'action' => 'NoneBestAnswer'
         ]);
     }
 }

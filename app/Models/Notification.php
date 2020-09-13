@@ -53,7 +53,7 @@ class Notification extends Model
     }
 
     /**
-     * Answerのupdate時に通知作成
+     * Answerのupdate時にBestAnswer通知作成
      * 
      * @param string $answer_id AnswerID
      */
@@ -68,4 +68,27 @@ class Notification extends Model
             'action' => 'BestAnswer',
         ]);
     }
+
+    /**
+     * Answerのupdate時に通知作成
+     * 
+     * @param string $answer_id AnswerID
+     */
+    public static function createNotifiUpdateNoneAnswer($answer_id)
+    {
+        $answer = Answer::findOrFail($answer_id);
+        $quiz   = Quiz::findOrFail($answer->quiz_id);
+
+        foreach($quiz->answers as $answer) {
+            if ($answer->hit !== 1) {
+                Notification::firstOrCreate([
+                    'visiter_id' => Auth::id(),
+                    'visited_id' => $answer->user_id,
+                    'quiz_id' => $answer->quiz->id,
+                    'action' => 'NoneBestAnswer',
+                ]);
+            }
+        }
+    }
+
 }
