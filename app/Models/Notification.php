@@ -57,7 +57,7 @@ class Notification extends Model
      * 
      * @param string $answer_id AnswerID
      */
-    public static function updateAnswer($answer_id)
+    public static function notifiUpdateAnswer($answer_id)
     {
         $answer = Answer::findOrFail($answer_id);
 
