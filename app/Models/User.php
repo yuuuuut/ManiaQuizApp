@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Auth;
+
 use App\Models\FollowCategory;
 
 class User extends Authenticatable
@@ -57,4 +59,32 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Category', 'follow_categories')
                     ->using(FollowCategory::class);
     }
+
+    /**
+     * UserがCategoryをフォローしているか判定
+     * 
+     * @param string $id カテゴリーID
+     * @return Boolean
+     */
+    public function is_category_following($id)
+    {
+        return $this->follow_categories()
+                    ->where('category_id', $id)
+                    ->exists();
+    }
+
+    /**
+     * Categoryをフォロー
+     * 
+     * @param string $id カテゴリーID
+     */
+    public function follow($id)
+    {
+        $exists = $this->is_category_following($id);
+
+        if (!$exists) {
+            $this->follow_categories()->attach($id);
+        }
+    }
+
 }
