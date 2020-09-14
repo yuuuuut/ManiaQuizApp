@@ -5,12 +5,20 @@
 <div>
     @foreach($categories as $category)
         {{ $category->name }}
-        <form action="{{ route('follow.category') }}" method="post">
-            @csrf
-            <input type="hidden" name="category_id" value="{{ $category->id }}">
-            <button type="submit">フォロー</button>
-        </form>
-        <br>
+        @if (Auth::user()->is_category_following($category->id))
+            <form action="{{ route('unfollow.category', $category->id) }}" method="post">
+                @csrf
+                @method('delete')
+                <button type="submit">フォローを外す</button>
+            </form>
+            <br>
+        @else
+            <form action="{{ route('follow.category', $category->id) }}" method="post">
+                @csrf
+                <button type="submit">フォロー</button>
+            </form>
+            <br>
+        @endif
     @endforeach
 </div>
 @endsection

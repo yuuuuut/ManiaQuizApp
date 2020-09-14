@@ -10,6 +10,7 @@ use Socialite;
 use Mockery;
 use Auth;
 
+use App\Models\FollowCategory;
 use App\Models\Category;
 
 class FollowCategoryTest extends TestCase
@@ -53,18 +54,31 @@ class FollowCategoryTest extends TestCase
     {
         $category_id = factory(Category::class)->create()->id;
 
-        $data = [
-            'user_id'     => Auth::id(),
-            'category_id' => $category_id,
-        ];
-
-        $response = $this->post(route('follow.category'), $data);
+        $response = $this->post(route('follow.category', $category_id));
         $response->assertStatus(302)
                 ->assertRedirect('/');
+
+        $this->assertEquals(1, FollowCategory::count());
         
         $this->assertDatabaseHas('follow_categories', [
             'user_id' => Auth::id(),
             'category_id' => $category_id,
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function Categoryのアンフォローができる()
+    {
+        $this->Categoryのフォローができる();
+
+        $category = FollowCategory::first();
+
+        $response = $this->delete(route('unfollow.category', $category->category_id));
+        $response->assertStatus(302)
+                ->assertRedirect('/');
+
+        $this->assertEquals(0, FollowCategory::count());
     }
 }

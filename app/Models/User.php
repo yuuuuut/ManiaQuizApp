@@ -78,12 +78,26 @@ class User extends Authenticatable
      * 
      * @param string $id カテゴリーID
      */
-    public function follow($id)
+    public function category_follow($id)
     {
         $exists = $this->is_category_following($id);
 
         if (!$exists) {
             $this->follow_categories()->attach($id);
+        }
+    }
+
+    /**
+     * Categoryをアンフォロー
+     * 
+     * @param string $id カテゴリーID
+     */
+    public function category_unfollow($id)
+    {
+        $exists = $this->is_category_following($id);
+
+        if ($exists) {
+            $this->follow_categories()->detach($id);
         }
     }
 
