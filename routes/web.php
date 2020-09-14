@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
 */
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/category', 'CategoryController@index')->name('category.index');
+    Route::get('/category/{category}', 'CategoryController@show')->name('category.show');
     Route::post('/category/{id}/follow', 'FollowCategoryController@store')->name('follow.category');
     Route::delete('/category/{id}/unfollow', 'FollowCategoryController@destroy')->name('unfollow.category');
 });
