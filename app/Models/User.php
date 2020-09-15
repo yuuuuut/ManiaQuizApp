@@ -9,34 +9,20 @@ use Illuminate\Notifications\Notifiable;
 use Auth;
 
 use App\Models\FollowCategory;
+use App\Models\FollowUser;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'uid', 'name', 'email', 'password', 'avatar'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -51,6 +37,16 @@ class User extends Authenticatable
     }
 
     /**
+     * follow_usersテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'follow_users', 'user_id', 'follow_id')
+                    ->using(FollowUser::class);
+    }
+
+    /**
      * follow_categoriesテーブル
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
@@ -58,6 +54,33 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Category', 'follow_categories')
                     ->using(FollowCategory::class);
+    }
+
+    /**
+     * UserがUserをフォローしているか判定
+     * 
+     * @param string $id  ユーザーID
+     * @return Boolean
+     */
+    public function is_user_following($id)
+    {
+        return $this->followings()
+                    ->where('follow_id', $id)
+                    ->exists();
+    }
+
+    /**
+     * Userをフォロー
+     * 
+     * @param string $id ユーザーID
+     */
+    public function user_follow($id)
+    {
+        $exists = $this->is_user_following($id);
+
+        if (!$exists && Auth::id() != $id) {
+            $this->followings()->attach($id);
+        }
     }
 
     /**
