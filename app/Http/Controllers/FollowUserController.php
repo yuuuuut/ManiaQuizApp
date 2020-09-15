@@ -13,4 +13,11 @@ class FollowUserController extends Controller
 
         return redirect('/');
     }
+
+    public function destroy($id)
+    {
+        Auth::user()->user_unfollow($id);
+
+        return redirect('/');
+    }
 }

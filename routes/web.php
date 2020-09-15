@@ -58,3 +58,4 @@ Route::group(['middleware' => ['auth']], function() {
 */
 Route::get('/users/{user}', 'UserController@show')->name('user.show');
 Route::post('/users{id}/follow', 'FollowUserController@store')->name('user.follow');
+Route::delete('/users{id}/unfollow', 'FollowUserController@destroy')->name('user.unfollow');

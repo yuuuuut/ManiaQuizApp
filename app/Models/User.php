@@ -84,6 +84,20 @@ class User extends Authenticatable
     }
 
     /**
+     * Userをアンフォロー
+     * 
+     * @param string $id ユーザーID
+     */
+    public function user_unfollow($id)
+    {
+        $exists = $this->is_user_following($id);
+
+        if ($exists && Auth::id() != $id) {
+            $this->followings()->detach($id);
+        }
+    }
+
+    /**
      * UserがCategoryをフォローしているか判定
      * 
      * @param string $id カテゴリーID

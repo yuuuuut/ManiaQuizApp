@@ -10,6 +10,7 @@ use Socialite;
 use Mockery;
 use Auth;
 
+use App\Models\FollowUser;
 use App\Models\User;
 
 class FollowUserTest extends TestCase
@@ -61,5 +62,21 @@ class FollowUserTest extends TestCase
             'user_id' => Auth::id(),
             'follow_id' => $user->id,
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function Userのアンフォローができる()
+    {
+        $this->Userのフォローができる();
+
+        $user = FollowUser::first();
+
+        $response = $this->delete(route('user.unfollow', $user->follow_id));
+        $response->assertStatus(302)
+                ->assertRedirect('/');
+
+        $this->assertEquals(0, FollowUser::count());
     }
 }
