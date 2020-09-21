@@ -20,53 +20,37 @@
 <body>
     <div id="app">
         <nav class="
-            fixed-top
             footer-color
             navbar
-            navbar-expand-md
-            shadow-sm
+            shadow p-3
         ">
-            <div class="container">
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            ゲスト
-                            <a href="{{ route('googleLogin') }}">ログイン</a>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+            <a class="navbar-brand ml-3" style="font-size: 26px; color: white;" href="/">
+                StayHomeLog
+            </a>
+            <div class="position-absolute" style="right: 50px;">
+                @if(Auth::check())
+                    <div class="dropdown dropleft">
+                        <div
+                            class="dropdown-toggle"
+                            data-toggle="dropdown"
+                        >
+                            <img class="icon-radius" src="{{ Auth::user()->avatar }}">
+                        </div>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button class="button-nonestyle">ログアウト</button>
+                                </form>
+                            </a>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('googleLogin') }}">ログイン</a>
+                @endif
             </div>
         </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
 
         <footer class="
             fixed-bottom
@@ -91,6 +75,10 @@
                 <a href="/" ><i class="far fa-grin-stars fa-2x"></i></a>
             </nav>
         </footer>
+    </div>
+
+    <div class="body-height">
+        @yield('content')
     </div>
 </body>
 </html>
