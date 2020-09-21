@@ -1,9 +1,9 @@
-<div class="mx-auto mt-4 mb-4 card text-center" style="width: 480px;">
-    <div class="card-header">
+<div class="mx-auto bg-dark  mt-4 mb-4 card text-center" style="width: 480px;">
+    <div class="card-header" style="color: white;">
         {{ $quiz->content }}
     </div>
     <div class="card-body">
-        <p class="card-text">
+        <p class="card-text" style="color: white;">
             {{ $quiz->content }}
         </p>
         @if (Request::is("/"))
@@ -15,6 +15,8 @@
         @endif
     </div>
     <div class="card-footer text-muted">
-    2 days ago
+        <level-component
+            :level="{{ json_encode($quiz->level) }}"
+        ></level-component>
     </div>
 </div>
