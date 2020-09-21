@@ -5,15 +5,30 @@
     @component('components.quiz_list', ['quiz' => $quiz])@endcomponent
 
     @if($is_auth_answer)
-        <div class="mx-auto mb-4 card text-center" style="width: 480px;">
+        <div
+            class="mx-auto mb-4 card text-center"
+            style="width: 480px;"
+        >
             <div class="card-body">
                 <p class="card-text">
-                    <button class="btn btn-secondary" type="submit" style="width: 400px;" disabled>回答済みです</button>
+                    <button
+                        class="btn btn-secondary"
+                        type="submit"
+                        style="width: 400px;"
+                        disabled
+                    >
+                        回答済みです
+                    </button>
                 </p>
             </div>
         </div>
+    @elseif($quiz->finish == 1)
+        <!-- 何も表示しない -->
     @elseif($quiz->user_id !== Auth::id())
-        <div class="mx-auto mb-4 card text-center" style="width: 480px;">
+        <div
+            class="mx-auto mb-4 card text-center"
+            style="width: 480px;"
+        >
             <div class="card-body">
                 <p class="card-text">
                     <form action="{{ route('answer.store') }}" method="post">
@@ -28,8 +43,31 @@
         </div>
     @endif
 
+    @if($quiz->finish == 1)
+        <div
+            class="mx-auto mt-4 mb-4 card text-center bg-success"
+            style="width: 480px;"
+        >
+            <div class="card-header text-white">
+                <h5>
+                    <span class="badge badge-info text-white">
+                        ベストアンサー
+                    </span>
+                </h5>
+                {{ $best_answer->user->name }}
+            </div>
+            <div class="card-body">
+                <p class="card-text text-white">
+                    {{ $best_answer->content }}
+                </p>
+            </div>
+        </div>
+    @endif
     @foreach($quiz->answers as $answer)
-        <div class="mx-auto mt-4 mb-4 card text-center bg-light" style="width: 480px;">
+        <div
+            class="mx-auto mt-4 mb-4 card text-center bg-light"
+            style="width: 480px;"
+        >
             <div class="card-header">
                 {{ $answer->user->name }}
             </div>
@@ -47,7 +85,6 @@
                 </div>
             @endif
         </div>
-
     @endforeach
 </div>
 @endsection

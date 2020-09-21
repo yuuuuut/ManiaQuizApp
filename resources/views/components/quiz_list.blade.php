@@ -1,5 +1,5 @@
 <div 
-    class="mx-auto bg-dark  mt-4 mb-4 card"
+    class="mx-auto bg-dark mt-4 mb-4 card"
     style="width: 480px;"
 >
     <div
@@ -22,7 +22,7 @@
         </p>
         <div class="text-center">
             @if (Request::is("/"))
-                @if($quiz->user_id === Auth::id())
+                @if($quiz->user_id === Auth::id() || $quiz->finish == 1)
                     <a
                         href="/quiz/{{ $quiz->id }}"
                         class="btn btn-info"

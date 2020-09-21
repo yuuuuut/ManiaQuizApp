@@ -59,4 +59,19 @@ class Quiz extends Model
             return $answer->user_id === Auth::id();
         });
     }
+
+    /**
+     * QuizのBestAnswerを返す
+     * 
+     * @param object $quiz カテゴリーID
+     * @return Object
+     */
+    public function getBestAnswer($quiz)
+    {
+        foreach ($quiz->answers as $answer) {
+            if ($answer->hit == 1) {
+                return $answer;
+            }
+        }
+    }
 }

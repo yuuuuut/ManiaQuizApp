@@ -26,10 +26,12 @@ class QuizController extends Controller
     public function show(Quiz $quiz)
     {
         $is_auth_answer = $quiz->auth_answer;
+        $best_answer    = $quiz->getBestAnswer($quiz);
 
         return view('quiz.show', [
             'quiz' => $quiz,
             'is_auth_answer' => $is_auth_answer,
+            'best_answer' => $best_answer,
         ]);
     }
 
