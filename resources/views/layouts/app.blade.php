@@ -24,7 +24,7 @@
         shadow p-3"
     >
         <a class="navbar-brand ml-3" style="font-size: 26px; color: white;" href="/">
-            StayHomeLog
+            マニアッQ
         </a>
         <div class="position-absolute" style="right: 50px;">
             @if(Auth::check())
@@ -78,6 +78,6 @@
             @yield('content')
         </div>
     </div>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <!--script src="{{ asset('js/app.js') }}"></script -->
 </body>
 </html>
