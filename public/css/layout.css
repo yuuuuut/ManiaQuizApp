@@ -1,0 +1,13 @@
+.footer-color {
+    background: -webkit-linear-gradient(49deg, rgb(99, 99, 99), rgb(72, 60, 80));
+    background: linear-gradient(49deg, rgb(51, 52, 53), rgb(24, 21, 26));
+}
+
+.footer-icon--color {
+    color: white;
+}
+
+.footer-icon--text {
+    color: white;
+    font-size: 12px;
+}
