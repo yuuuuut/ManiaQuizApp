@@ -1,3 +1,5 @@
+body { padding-bottom: 100px; }
+
 .button-nonestyle {
     background-color: transparent;
     border: none;

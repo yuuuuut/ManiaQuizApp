@@ -20,6 +20,7 @@
 <body>
     <div id="app">
         <nav class="
+            
             footer-color
             navbar
             shadow p-3
