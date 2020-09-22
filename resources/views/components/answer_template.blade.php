@@ -27,7 +27,9 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                {{ $answer->content }}
+                <a href="{{ route('quiz.show', $answer->quiz->id) }}">
+                    {{ $answer->content }}
+                </a>
             </p>
         </div>
         @if($answer->quiz->user_id === Auth::id() && $answer->hit == 0)

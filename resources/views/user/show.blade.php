@@ -7,7 +7,10 @@
     @endcomponent
 
     @component('components.user_show_nav',
-        ['user_quizzes' => $user_quizzes])
+        [
+            'user_quizzes' => $user_quizzes,
+            'user_answers' => $user_answers,
+        ])
     @endcomponent
 
     @if(Auth::user()->is_user_following($user->id))

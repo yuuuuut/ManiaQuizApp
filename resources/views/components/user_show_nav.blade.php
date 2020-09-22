@@ -26,14 +26,14 @@
     >
         <a
             class="nav-link"
-            id="profile-tab"
+            id="answer-tab"
             data-toggle="tab"
-            href="#profile"
+            href="#answer"
             role="tab"
-            aria-controls="profile"
+            aria-controls="answer"
             aria-selected="false"
         >
-            回答した問題
+            投稿した回答
         </a>
     </li>
     <li
@@ -70,8 +70,18 @@
         @endforeach
         {{ $user_quizzes->links() }}
     </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
+    <div
+        class="tab-pane fade"
+        id="answer"
+        role="tabpanel"
+        aria-labelledby="answer-tab"
+    >
+        @foreach($user_answers as $answer)
+            @component('components.answer_template',
+                ['answer' => $answer])
+            @endcomponent
+        @endforeach
+        {{ $user_answers->links() }}
     </div>
     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
 </div>
