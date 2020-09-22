@@ -12,9 +12,10 @@
         </h4>
         <div>
             @foreach($user->follow_categories as $category)
-                <span class="badge badge-primary">
-                    <i class="fas fa-tag fa-1x pr-1"></i>
-                    {{ $category->name }}
+                <span class="badge badge-primary pt-1">
+                    <a class="text-white" href="{{ route('category.show', $category->id) }}">
+                        {{ $category->name }}
+                    </a>
                 </span>
             @endforeach
         </div>

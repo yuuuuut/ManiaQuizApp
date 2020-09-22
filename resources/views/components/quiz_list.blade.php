@@ -21,7 +21,10 @@
             {{ $quiz->content }}
         </p>
         <div class="text-center">
-            @if (Request::is("/") || Request::is("*user*"))
+            @if (Request::is("/") ||
+                Request::is("*user*") ||
+                Request::is("*category*")
+                )
                 @if($quiz->user_id === Auth::id() || $quiz->finish == 1)
                     <a
                         href="/quiz/{{ $quiz->id }}"
@@ -45,5 +48,10 @@
         <level-component
             :level="{{ json_encode($quiz->level) }}"
         ></level-component>
+        <span class="a badge badge-primary pt-1">
+            <a class="text-white" href="{{ route('category.show', $quiz->category->id) }}">
+                {{ $quiz->category->name }}
+            </a>
+        </span>
     </div>
 </div>

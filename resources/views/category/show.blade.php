@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    {{ $category->quizzes }}
+<div>
+    @foreach($quizzes as $quiz)
+        @component('components.quiz_list',
+            ['quiz' => $quiz])
+        @endcomponent
+    @endforeach
+    {{ $quizzes->links() }}
 @endsection
