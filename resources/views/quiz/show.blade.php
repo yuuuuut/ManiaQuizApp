@@ -2,7 +2,9 @@
 
 @section('content')
 <div>
-    @component('components.quiz_list', ['quiz' => $quiz])@endcomponent
+    @component('components.quiz_list',
+        ['quiz' => $quiz])
+    @endcomponent
 
     @if($quiz->finish == 1)
         <!-- 何も表示しない -->
@@ -45,33 +47,14 @@
 
     @if($quiz->finish == 1)
         <!-- Best Answer表示 -->
-        @component('components.best_answer', ['best_answer' => $best_answer])@endcomponent
+        @component('components.answer_template',
+            ['answer' => $best_answer])
+        @endcomponent
     @else
         @foreach($quiz->answers as $answer)
-            <div
-                class="mx-auto mt-4 mb-4 card text-center bg-light"
-                style="width: 480px;"
-            >
-                <div class="card-header">
-                    <img class="icon-radius" src="{{ $answer->user->avatar }}">
-                    <div class="font-weight-bold">
-                        {{ $answer->user->name }}
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        {{ $answer->content }}
-                    </p>
-                </div>
-                @if($quiz->user_id === Auth::id())
-                    <div class="card-footer text-muted">
-                        <form action="{{ route('answer.update', ['id' => $answer->id]) }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-success">この回答を正解にする</button>
-                        </form>
-                    </div>
-                @endif
-            </div>
+            @component('components.answer_template',
+                ['answer' => $answer])
+            @endcomponent
         @endforeach
     @endif
 </div>
