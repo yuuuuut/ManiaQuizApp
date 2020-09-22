@@ -4,7 +4,9 @@
 <div>
     @component('components.quiz_list', ['quiz' => $quiz])@endcomponent
 
-    @if($is_auth_answer)
+    @if($quiz->finish == 1)
+        <!-- 何も表示しない -->
+    @elseif($is_auth_answer)
         <div
             class="mx-auto mb-4 card text-center"
             style="width: 480px;"
@@ -22,8 +24,6 @@
                 </p>
             </div>
         </div>
-    @elseif($quiz->finish == 1)
-        <!-- 何も表示しない -->
     @elseif($quiz->user_id !== Auth::id())
         <div
             class="mx-auto mb-4 card text-center"
@@ -44,47 +44,35 @@
     @endif
 
     @if($quiz->finish == 1)
-        <div
-            class="mx-auto mt-4 mb-4 card text-center bg-success"
-            style="width: 480px;"
-        >
-            <div class="card-header text-white">
-                <h5>
-                    <span class="badge badge-info text-white">
-                        ベストアンサー
-                    </span>
-                </h5>
-                {{ $best_answer->user->name }}
-            </div>
-            <div class="card-body">
-                <p class="card-text text-white">
-                    {{ $best_answer->content }}
-                </p>
-            </div>
-        </div>
-    @endif
-    @foreach($quiz->answers as $answer)
-        <div
-            class="mx-auto mt-4 mb-4 card text-center bg-light"
-            style="width: 480px;"
-        >
-            <div class="card-header">
-                {{ $answer->user->name }}
-            </div>
-            <div class="card-body">
-                <p class="card-text">
-                    {{ $answer->content }}
-                </p>
-            </div>
-            @if($quiz->user_id === Auth::id())
-                <div class="card-footer text-muted">
-                    <form action="{{ route('answer.update', ['id' => $answer->id]) }}" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-success">この回答を正解にする</button>
-                    </form>
+        <!-- Best Answer表示 -->
+        @component('components.best_answer', ['best_answer' => $best_answer])@endcomponent
+    @else
+        @foreach($quiz->answers as $answer)
+            <div
+                class="mx-auto mt-4 mb-4 card text-center bg-light"
+                style="width: 480px;"
+            >
+                <div class="card-header">
+                    <img class="icon-radius" src="{{ $answer->user->avatar }}">
+                    <div class="font-weight-bold">
+                        {{ $answer->user->name }}
+                    </div>
                 </div>
-            @endif
-        </div>
-    @endforeach
+                <div class="card-body">
+                    <p class="card-text">
+                        {{ $answer->content }}
+                    </p>
+                </div>
+                @if($quiz->user_id === Auth::id())
+                    <div class="card-footer text-muted">
+                        <form action="{{ route('answer.update', ['id' => $answer->id]) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-success">この回答を正解にする</button>
+                        </form>
+                    </div>
+                @endif
+            </div>
+        @endforeach
+    @endif
 </div>
 @endsection
