@@ -36,8 +36,8 @@
                         <img class="icon-radius" src="{{ Auth::user()->avatar }}">
                     </div>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('user.show', Auth::id()) }}">マイページ</a>
+                        <a class="dropdown-item">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button class="button-nonestyle">ログアウト</button>

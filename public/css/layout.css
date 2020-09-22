@@ -1,5 +1,9 @@
 body { padding-bottom: 100px; }
 
+ul { 
+    justify-content: center; 
+}
+
 .button-nonestyle {
     background-color: transparent;
     border: none;

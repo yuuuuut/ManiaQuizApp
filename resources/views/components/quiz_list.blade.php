@@ -21,7 +21,7 @@
             {{ $quiz->content }}
         </p>
         <div class="text-center">
-            @if (Request::is("/"))
+            @if (Request::is("/") || Request::is("*user*"))
                 @if($quiz->user_id === Auth::id() || $quiz->finish == 1)
                     <a
                         href="/quiz/{{ $quiz->id }}"

@@ -28,6 +28,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * quizテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function quizzes()
+    {
+        return $this->hasMany('App\Models\Quiz', 'user_id', 'id');
+    }
+
+    /**
      * performanceテーブル
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
