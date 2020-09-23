@@ -16,6 +16,15 @@ class Quiz extends Model
     ];
 
     /**
+     * usersテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    /**
      * answersテーブル
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */

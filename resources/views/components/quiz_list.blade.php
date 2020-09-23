@@ -1,5 +1,5 @@
 <div 
-    class="mx-auto bg-dark mt-4 mb-4 card"
+    class="mx-auto bg-dark mb-4 card"
     style="width: 480px;"
 >
     <div
@@ -10,7 +10,13 @@
             :status="{{ json_encode($quiz->finish) }}"
         ></quizstatus-component>
         <div class="text-center">
-            {{ $quiz->content }}
+            <img
+                class="icon-radius"
+                src="{{ $quiz->user->avatar }}"
+            >
+            <div class="font-weight-bold">
+                {{ $quiz->user->name }}
+            </div>
         </div>
     </div>
     <div class="card-body">

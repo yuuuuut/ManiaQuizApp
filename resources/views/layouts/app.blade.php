@@ -19,24 +19,43 @@
 
 <body>
     <nav class="
-        footer-color
         navbar
+        fixed-top
+        footer-color
         shadow p-3"
     >
-        <a class="navbar-brand ml-3" style="font-size: 26px; color: white;" href="/">
+        <a
+            class="navbar-brand ml-3"
+            style="font-size: 26px; color: white;"
+            href="/"
+        >
             マニアッQ
         </a>
-        <div class="position-absolute" style="right: 50px;">
+        <div
+            class="position-absolute"
+            style="right: 50px;"
+        >
             @if(Auth::check())
                 <div class="dropdown dropleft">
                     <div
                         class="dropdown-toggle"
                         data-toggle="dropdown"
                     >
-                        <img class="icon-radius" src="{{ Auth::user()->avatar }}">
+                        <img
+                            class="icon-radius"
+                            src="{{ Auth::user()->avatar }}"
+                        >
                     </div>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{ route('user.show', Auth::id()) }}">マイページ</a>
+                    <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                    >
+                        <a
+                            class="dropdown-item"
+                            href="{{ route('user.show', Auth::id()) }}"
+                        >
+                            マイページ
+                        </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -47,35 +66,17 @@
                     </div>
                 </div>
             @else
-                <a href="{{ route('googleLogin') }}">ログイン</a>
+                <a
+                    class="btn btn-primary"
+                    href="{{ route('googleLogin') }}"
+                >
+                    ログイン
+                </a>
             @endif
         </div>
     </nav>
-    <footer class="
-        fixed-bottom
-        bd-highlight
-    ">
-        <nav class="
-            footer-color
-            d-flex
-            justify-content-around
-            navbar
-            navbar-expand-md
-        ">
-            <div class="d-flex flex-column">
-                <a href="/">
-                    <i class="fas fa-home fa-2x footer-icon--color"></i>
-                </a>
-                <div class="footer-icon--text">ホーム</div>
-            </div>
-            <a href="/"><i class="fas fa-user fa-2x"></i></a>
-            <a href="/"><i class="fas fa-trophy fa-2x"></i></a>
-            <a href="/"><i class="fas fa-eye fa-2x"></i></a>
-            <a href="/" ><i class="far fa-grin-stars fa-2x"></i></a>
-        </nav>
-    </footer>
     <div id="app">
-        <div class="body-height">
+        <div style="padding-top: 100px;">
             @yield('content')
         </div>
     </div>
