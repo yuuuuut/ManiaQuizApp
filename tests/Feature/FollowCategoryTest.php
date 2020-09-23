@@ -12,6 +12,7 @@ use Auth;
 
 use App\Models\FollowCategory;
 use App\Models\Category;
+use App\Models\User;
 
 class FollowCategoryTest extends TestCase
 {
@@ -54,9 +55,7 @@ class FollowCategoryTest extends TestCase
     {
         $category_id = factory(Category::class)->create()->id;
 
-        $response = $this->post(route('follow.category', $category_id));
-        $response->assertStatus(302)
-                ->assertRedirect('/');
+        $response = $this->post("/category/$category_id/follow");
 
         $this->assertEquals(1, FollowCategory::count());
         
@@ -73,11 +72,9 @@ class FollowCategoryTest extends TestCase
     {
         $this->Categoryのフォローができる();
 
-        $category = FollowCategory::first();
+        $category = Category::first();
 
-        $response = $this->delete(route('unfollow.category', $category->category_id));
-        $response->assertStatus(302)
-                ->assertRedirect('/');
+        $response = $this->post("/category/$category->id/unfollow");
 
         $this->assertEquals(0, FollowCategory::count());
     }
