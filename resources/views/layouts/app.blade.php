@@ -52,6 +52,13 @@
                     >
                         <a
                             class="dropdown-item"
+                            href="{{ route('category.index') }}"
+                        >
+                            カテゴリー一覧
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a
+                            class="dropdown-item"
                             href="{{ route('user.show', Auth::id()) }}"
                         >
                             マイページ

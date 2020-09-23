@@ -1,24 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div>
-    @foreach($categories as $category)
-        {{ $category->name }}
-        @if (Auth::user()->is_category_following($category->id))
-            <form action="{{ route('unfollow.category', $category->id) }}" method="post">
-                @csrf
-                @method('delete')
-                <button type="submit">フォローを外す</button>
-            </form>
-            <br>
-        @else
-            <form action="{{ route('follow.category', $category->id) }}" method="post">
-                @csrf
-                <button type="submit">フォロー</button>
-            </form>
-            <br>
-        @endif
-    @endforeach
+<div
+    class="card mx-auto"
+    style="width: 400px;"
+>
+    <div class="card-header">
+        カテゴリー
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach($categories as $category)
+            <li class="list-group-item">
+                <a
+                    class="btn btn-primary"
+                    style="width: 360px;"
+                    href="{{ route('category.show', $category->id) }}"
+                >
+                    {{ $category->name }}
+                    <span class="badge badge-light">
+                        {{ $category->quizzes->count() }}
+                    </span>
+                </a>
+            </li>
+        @endforeach
+    </ul>
 </div>
 @endsection

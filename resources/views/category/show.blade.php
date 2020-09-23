@@ -2,7 +2,7 @@
 
 @section('content')
     <div
-        class="mx-auto mt-4 card text-center"
+        class="mx-auto mt-4 mb-3 card text-center"
         style="width: 480px;"
     >
         <div class="card-body">
