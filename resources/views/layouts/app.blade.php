@@ -37,6 +37,7 @@
                     </div>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ route('user.show', Auth::id()) }}">マイページ</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
