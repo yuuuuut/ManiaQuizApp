@@ -5,7 +5,7 @@
     >
 @else
     <div
-        class="mx-auto mt-4 mb-4 card text-center bg-light"
+        class="mx-auto mt-4 mb-4 card text-center bg-dark"
         style="width: 480px;"
     >
 @endif
@@ -17,13 +17,17 @@
                     </span>
                 </h5>
             @endif
-            <img
-                class="icon-radius"
-                src="{{ $answer->user->avatar }}"
+            <a
+                href="{{ route('user.show', $answer->user->id) }}"
             >
-            <div class="font-weight-bold">
-                {{ $answer->user->name }}
-            </div>
+                <img
+                    class="icon-radius"
+                    src="{{ $answer->user->avatar }}"
+                >
+                <div class="font-weight-bold mt-2">
+                    {{ $answer->user->name }}
+                </div>
+            </a>
         </div>
         <div class="card-body">
             <p class="card-text">

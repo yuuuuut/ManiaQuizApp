@@ -10,13 +10,18 @@
             :status="{{ json_encode($quiz->finish) }}"
         ></quizstatus-component>
         <div class="text-center">
-            <img
-                class="icon-radius"
-                src="{{ $quiz->user->avatar }}"
+            <a
+                class="text-white"
+                href="{{ route('user.show', $quiz->user->id) }}"
             >
-            <div class="font-weight-bold">
-                {{ $quiz->user->name }}
-            </div>
+                <img
+                    class="icon-radius"
+                    src="{{ $quiz->user->avatar }}"
+                >
+                <div class="font-weight-bold mt-2">
+                    {{ $quiz->user->name }}
+                </div>
+            </a>
         </div>
     </div>
     <div class="card-body">
