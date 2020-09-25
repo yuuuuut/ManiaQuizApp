@@ -18,12 +18,7 @@
 </head>
 
 <body>
-    <nav class="
-        navbar
-        fixed-top
-        footer-color
-        shadow p-3"
-    >
+    <nav class=" navbar fixed-top footer-color shadow p-3">
         <a
             class="navbar-brand ml-3"
             style="font-size: 26px; color: white;"
@@ -31,11 +26,26 @@
         >
             マニアッQ
         </a>
-        <div
-            class="position-absolute"
-            style="right: 50px;"
-        >
-            @if(Auth::check())
+        @if(Auth::check())
+            <div
+                class="position-absolute"
+                style="right: 130px;"
+            >
+                <a href="{{ route('notifi.index') }}">
+                    @if(Auth::user()->isNoCkeckNotification())
+                        <span class="position-absolute pl-3 text-primary">
+                            ●
+                        </span>
+                        <i class="fas fa-bell fa-2x text-white"></i>
+                    @else
+                        <i class="fas fa-bell fa-2x text-white"></i>
+                    @endif
+                </a>
+            </div>
+            <div
+                class="position-absolute"
+                style="right: 35px;"
+            >
                 <div class="dropdown dropleft">
                     <div
                         class="dropdown-toggle"
@@ -72,15 +82,15 @@
                         </a>
                     </div>
                 </div>
-            @else
-                <a
-                    class="btn btn-primary"
-                    href="{{ route('googleLogin') }}"
-                >
-                    ログイン
-                </a>
-            @endif
-        </div>
+            </div>
+        @else
+            <a
+                class="btn btn-primary"
+                href="{{ route('googleLogin') }}"
+            >
+                ログイン
+            </a>
+        @endif
     </nav>
     <div id="app">
         <div style="padding-top: 100px;">

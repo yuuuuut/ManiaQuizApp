@@ -70,11 +70,25 @@ class NotificationTest extends TestCase
                             'visited_id' => $auth->id,
                             'quiz_id' => $quiz->id
                         ]);
+        
+        $this->assertDatabaseHas('notifications', [
+            'visiter_id' => $user->id,
+            'visited_id' => $auth->id,
+            'quiz_id' => $quiz->id,
+            'checked' => false,
+        ]);
 
         $this->assertEquals(10, Notification::count());
 
         $response = $this->get(route('notifi.index'));
         $response->assertStatus(200);
+
+        $this->assertDatabaseHas('notifications', [
+            'visiter_id' => $user->id,
+            'visited_id' => $auth->id,
+            'quiz_id' => $quiz->id,
+            'checked' => true,
+        ]);
 
         $this->assertEquals(9, Notification::count());
     }

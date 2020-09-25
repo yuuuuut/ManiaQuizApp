@@ -46,6 +46,19 @@ class Notification extends Model
     }
 
     /**
+     * 通知の既読
+     * 
+     * @param collection $notifications
+     */
+    public static function NotificationCheckTrue($notifications)
+    {
+        $notifications->map(function ($item) {
+            $item->checked = true;
+            $item->save();
+        });
+    }
+
+    /**
      * 通知の削除
      * 
      * @param collection $notifications
@@ -54,7 +67,10 @@ class Notification extends Model
     {
         if ($notifications->count() >= 10) {
             $n = self::oldest('created_at')->first();
-            self::destroy($n->id);
+
+            if ($n->checked == true) {
+                self::destroy($n->id);
+            }
         }
     }
 
@@ -67,7 +83,7 @@ class Notification extends Model
     {
         $quiz = Quiz::findOrFail($quiz_id);
 
-        Notification::firstOrCreate([
+        self::firstOrCreate([
             'visiter_id' => Auth::id(),
             'visited_id' => $quiz->user_id,
             'quiz_id' => $quiz_id,
@@ -84,11 +100,11 @@ class Notification extends Model
     {
         $answer = Answer::findOrFail($answer_id);
 
-        Notification::firstOrCreate([
+        self::firstOrCreate([
             'visiter_id' => Auth::id(),
             'visited_id' => $answer->user_id,
             'quiz_id' => $answer->quiz->id,
-            'action' => 'BestAnswer',
+            'action'  => 'BestAnswer',
         ]);
     }
 
@@ -104,11 +120,11 @@ class Notification extends Model
 
         foreach($quiz->answers as $answer) {
             if ($answer->hit !== 1) {
-                Notification::firstOrCreate([
+                self::firstOrCreate([
                     'visiter_id' => Auth::id(),
                     'visited_id' => $answer->user_id,
                     'quiz_id' => $answer->quiz->id,
-                    'action' => 'NoneBestAnswer',
+                    'action'  => 'NoneBestAnswer',
                 ]);
             }
         }

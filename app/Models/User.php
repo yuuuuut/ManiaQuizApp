@@ -66,6 +66,15 @@ class User extends Authenticatable
     }
 
     /**
+     * notificationテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function passive_notifications()
+    {
+        return $this->hasMany('App\Models\Notification', 'visited_id');
+    }
+
+    /**
      * UserがUserをフォローしているか判定
      * 
      * @param string $id  ユーザーID
@@ -145,6 +154,19 @@ class User extends Authenticatable
         if ($exists) {
             $this->follow_categories()->detach($id);
         }
+    }
+
+    /**
+     * 未読の通知が存在するかチェック
+     * 
+     * @return boolean
+     */
+    public function isNoCkeckNotification()
+    {
+        $bool = $this->passive_notifications()
+                    ->where('checked', false)
+                    ->exists();
+        return $bool;
     }
 
 }
