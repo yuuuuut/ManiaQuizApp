@@ -12,6 +12,8 @@ class NotificationController extends Controller
     {
         $notifications = Notification::NotificationIndex()->get();
 
+        Notification::deleteNotification($notifications);
+
         return view('notification.index', [
             'notifications' => $notifications,
         ]);

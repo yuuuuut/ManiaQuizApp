@@ -9,6 +9,10 @@ use Tests\TestCase;
 use Socialite;
 use Mockery;
 
+use App\Models\Notification;
+use App\Models\Quiz;
+use App\Models\User;
+
 class NotificationTest extends TestCase
 {
     use RefreshDatabase;
@@ -50,5 +54,41 @@ class NotificationTest extends TestCase
     {
         $response = $this->get("/notification");
         $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function 通知が10件超えた場合古い1件を削除する()
+    {
+        $user = factory(User::class)->create();
+        $quiz = factory(Quiz::class)->create(['user_id' => $user->id]);
+        $auth = User::first();
+
+        factory(Notification::class, 10)->create([
+                            'visiter_id' => $user->id,
+                            'visited_id' => $auth->id,
+                            'quiz_id' => $quiz->id
+                        ]);
+
+        $this->assertEquals(10, Notification::count());
+
+        $response = $this->get(route('notifi.index'));
+        $response->assertStatus(200);
+
+        $this->assertEquals(9, Notification::count());
+    }
+
+    /**
+     * @test
+     */
+    public function 通知が10件以下の場合何もしない()
+    {
+        $this->通知が10件超えた場合古い1件を削除する();
+
+        $response = $this->get(route('notifi.index'));
+        $response->assertStatus(200);
+
+        $this->assertEquals(9, Notification::count());
     }
 }

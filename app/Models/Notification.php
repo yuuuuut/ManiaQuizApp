@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-use App\Models\Quiz;
 use App\Models\Answer;
+use App\Models\Quiz;
 
 class Notification extends Model
 {
@@ -43,6 +43,19 @@ class Notification extends Model
         return $query->where('visited_id', Auth::id())
                     ->with(['quiz', 'visiter:id,name'])
                     ->orderBy('created_at', 'DESC');
+    }
+
+    /**
+     * 通知の削除
+     * 
+     * @param collection $notifications
+     */
+    public static function deleteNotification($notifications)
+    {
+        if ($notifications->count() >= 10) {
+            $n = self::oldest('created_at')->first();
+            self::destroy($n->id);
+        }
     }
 
     /**
