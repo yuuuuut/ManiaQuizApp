@@ -36,6 +36,15 @@ class Notification extends Model
     }
 
     /**
+     * Notification.indexスコープ
+     */
+    public function scopeNotificationIndex($query)
+    {
+        return $query->where('visited_id', Auth::id())
+                    ->with(['quiz', 'visiter:id,name']);
+    }
+
+    /**
      * AnswerのCreate時に通知作成
      * 
      * @param string $quiz_id QuizId
