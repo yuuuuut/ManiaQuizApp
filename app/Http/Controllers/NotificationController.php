@@ -13,7 +13,7 @@ class NotificationController extends Controller
     {
         $notifications = Notification::
                         where('visited_id', Auth::id())
-                        ->with(['quiz:id,content', 'visiter:id,name'])
+                        ->with(['quiz', 'visiter:id,name'])
                         ->get();
 
         return view('notification.index', [

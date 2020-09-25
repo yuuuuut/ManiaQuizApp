@@ -1,7 +1,14 @@
+@if(Request::is("*notification*"))
+<div 
+    class="mx-auto bg-dark mb-1 mt-2 card"
+    style="width: 400px;"
+>
+@else
 <div 
     class="mx-auto bg-dark mb-4 card"
     style="width: 480px;"
 >
+@endif
     <div
         class="card-header"
         style="color: white;"
