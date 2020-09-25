@@ -34,6 +34,9 @@
                         ['quiz' => $n->quiz])
                     @endcomponent
                 @endif
+                <div class="float-right">
+                    {{ $n->created_at->diffForHumans() }}
+                </div>
             </li>
         @endforeach
     </ul>
