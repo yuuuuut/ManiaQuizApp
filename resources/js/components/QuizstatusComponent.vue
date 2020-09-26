@@ -17,8 +17,5 @@ export default {
             required: true,
         }
     },
-    mounted: function() {
-        console.log(this.status)
-    }
 }
 </script>

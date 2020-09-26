@@ -10,7 +10,13 @@
         <h4 class="card-title mt-2">
             {{ $user->name }}
         </h4>
-        <div>
+        @if(Auth::id() != $user->id)
+            <user-follow
+                :user-id="{{ json_encode($user->id) }}"
+                :is-following="{{ json_encode($is_following) }}"
+            ></user-follow>
+        @endif
+        <div class="mt-2">
             @foreach($user->follow_categories as $category)
                 <span class="badge badge-primary pt-1">
                     <a class="text-white" href="{{ route('category.show', $category->id) }}">

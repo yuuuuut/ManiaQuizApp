@@ -54,14 +54,16 @@ class FollowUserTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $response = $this->post(route('user.follow', $user->id));
-        $response->assertStatus(302)
-                ->assertRedirect('/');
+        $response = $this->post("/users/$user->id/follow");
+
+        $this->assertEquals(1, FollowUser::count());
 
         $this->assertDatabaseHas('follow_users', [
             'user_id' => Auth::id(),
             'follow_id' => $user->id,
         ]);
+
+        return $user;
     }
 
     /**
@@ -69,13 +71,9 @@ class FollowUserTest extends TestCase
      */
     public function Userのアンフォローができる()
     {
-        $this->Userのフォローができる();
+        $user = $this->Userのフォローができる();
 
-        $user = FollowUser::first();
-
-        $response = $this->delete(route('user.unfollow', $user->follow_id));
-        $response->assertStatus(302)
-                ->assertRedirect('/');
+        $response = $this->post("/users/$user->id/unfollow");
 
         $this->assertEquals(0, FollowUser::count());
     }
