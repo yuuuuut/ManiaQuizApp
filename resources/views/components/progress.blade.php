@@ -7,5 +7,8 @@
         aria-valuemin="0"
         aria-valuemax="100"
     >
+        <div class="text-primary">
+            {{ $val }}
+        </div>
     </div>
 </div>
