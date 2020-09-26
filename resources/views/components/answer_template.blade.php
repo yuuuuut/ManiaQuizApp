@@ -24,14 +24,17 @@
                     class="icon-radius"
                     src="{{ $answer->user->avatar }}"
                 >
-                <div class="font-weight-bold mt-2">
+                <div class="font-weight-bold text-white mt-2">
                     {{ $answer->user->name }}
                 </div>
             </a>
         </div>
         <div class="card-body">
             <p class="card-text">
-                <a href="{{ route('quiz.show', $answer->quiz->id) }}">
+                <a
+                    class="text-white"
+                    href="{{ route('quiz.show', $answer->quiz->id) }}"
+                >
                     {{ $answer->content }}
                 </a>
             </p>

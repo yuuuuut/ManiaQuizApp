@@ -4,7 +4,7 @@
         style="width: 480px;"
     >
         <div class="card-header">投稿数</div>
-        @component('components.performance_template', 
+        @component('performance.kind.number_of_quizzes', 
             ['user_count' => $user->performance->number_of_quizzes])
         @endcomponent
     </div>
@@ -14,7 +14,7 @@
         style="width: 480px;"
     >
         <div class="card-header">回答数</div>
-        @component('components.performance_template', 
+        @component('performance.kind.number_of_answers', 
             ['user_count' => $user->performance->number_of_answers])
         @endcomponent
     </div>
@@ -24,7 +24,7 @@
         style="width: 480px;"
     >
         <div class="card-header">ベストアンサー数</div>
-        @component('components.performance_template', 
+        @component('performance.kind.number_of_correct_answers', 
             ['user_count' => $user->performance->number_of_correct_answers])
         @endcomponent
     </div>
