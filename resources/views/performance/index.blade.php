@@ -3,7 +3,11 @@
         class="mx-auto mb-1 card text-center"
         style="width: 480px;"
     >
-        <div class="card-header">投稿数</div>
+        <div class="card-header">
+            投稿数
+            @component('components.performance_help')@endcomponent
+        </div>
+
         @component('performance.kind.number_of_quizzes', 
             ['user_count' => $user->performance->number_of_quizzes])
         @endcomponent
@@ -13,7 +17,11 @@
         class="mx-auto mb-1 card text-center"
         style="width: 480px;"
     >
-        <div class="card-header">回答数</div>
+        <div class="card-header">
+            回答数
+            @component('components.performance_help')@endcomponent
+        </div>
+
         @component('performance.kind.number_of_answers', 
             ['user_count' => $user->performance->number_of_answers])
         @endcomponent
@@ -23,7 +31,11 @@
         class="mx-auto mb-1 card text-center"
         style="width: 480px;"
     >
-        <div class="card-header">ベストアンサー数</div>
+        <div class="card-header">
+            ベストアンサー数
+            @component('components.performance_help')@endcomponent
+        </div>
+
         @component('performance.kind.number_of_correct_answers', 
             ['user_count' => $user->performance->number_of_correct_answers])
         @endcomponent

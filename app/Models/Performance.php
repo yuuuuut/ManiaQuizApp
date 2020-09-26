@@ -25,7 +25,7 @@ class Performance extends Model
      */
     public static function addNumberOfQuizzes()
     {
-        $authPer = Performance::AuthPerformance(Auth::id());
+        $authPer = self::AuthPerformance(Auth::id());
         $authPer->number_of_quizzes = $authPer->number_of_quizzes + 1;
         $authPer->save();
     }
@@ -35,7 +35,7 @@ class Performance extends Model
      */
     public static function addNumberOfAnswers()
     {
-        $authPer = Performance::AuthPerformance(Auth::id());
+        $authPer = self::AuthPerformance(Auth::id());
         $authPer->number_of_answers = $authPer->number_of_answers + 1;
         $authPer->save();
     }
@@ -48,7 +48,7 @@ class Performance extends Model
         $answer = Answer::findOrFail($answer_id);
         $user   = $answer->user;
 
-        $userPer = Performance::AuthPerformance($user->id);
+        $userPer = self::AuthPerformance($user->id);
         $userPer->number_of_correct_answers = $userPer->number_of_correct_answers + 1;
         $userPer->save();
     }
