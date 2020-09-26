@@ -8,6 +8,7 @@
 
     @component('components.user_show_nav',
         [
+            'user' => $user,
             'user_quizzes' => $user_quizzes,
             'user_answers' => $user_answers,
         ])

@@ -42,11 +42,11 @@
     >
         <a
             class="nav-link"
-            id="contact-tab"
+            id="performance-tab"
             data-toggle="tab"
-            href="#contact"
+            href="#performance"
             role="tab"
-            aria-controls="contact"
+            aria-controls="performance"
             aria-selected="false"
         >
             実績
@@ -83,5 +83,14 @@
         @endforeach
         {{ $user_answers->links() }}
     </div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+    <div
+        class="tab-pane fade"
+        id="performance"
+        role="tabpanel"
+        aria-labelledby="performance-tab"
+    >
+        @component('performance.index', 
+            ['user' => $user])
+        @endcomponent
+    </div>
 </div>
