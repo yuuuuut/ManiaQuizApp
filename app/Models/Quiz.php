@@ -105,21 +105,4 @@ class Quiz extends Model
         }
         return $query;
     }
-
-    /**
-     * selectbox用カテゴリーリスト
-     * 
-     * @return Array
-     */
-    public static function selectCategory()
-    {
-        $categorys = Category::all();
-        $list = array(" " => "選択してください");
-
-        foreach ($categorys as $category) {
-            $list += array($category->id => $category->name);
-        }
-        return $list;
-    }
-
 }

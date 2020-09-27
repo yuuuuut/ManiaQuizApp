@@ -17,6 +17,8 @@ class Category extends Model
 
     /**
      * カテゴリー一覧の取得
+     * 
+     * @return Collection
      */
     public static function getCategories()
     {
