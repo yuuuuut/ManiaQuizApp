@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 use Auth;
+
+use App\Models\Category;
 
 class Quiz extends Model
 {
@@ -83,4 +84,42 @@ class Quiz extends Model
             }
         }
     }
+
+    /**
+     * Quizの検索クエリー作成
+     * 
+     * @param int $level
+     * @param string $category_id
+     * @return Builder
+     */
+    public static function searchQuiz($level, $category_id)
+    {
+        $query = self::query();
+
+        if (!empty($level)) {
+            $query->where('level', $level);
+        }
+
+        if (!empty($category_id)) {
+            $query->where('category_id', $category_id);
+        }
+        return $query;
+    }
+
+    /**
+     * selectbox用カテゴリーリスト
+     * 
+     * @return Array
+     */
+    public static function selectCategory()
+    {
+        $categorys = Category::all();
+        $list = array(" " => "選択してください");
+
+        foreach ($categorys as $category) {
+            $list += array($category->id => $category->name);
+        }
+        return $list;
+    }
+
 }
