@@ -11,6 +11,10 @@
                 <li class="list-group-item">
                     @if($n->action === 'AnswerStore')
                         <a href="{{ route('user.show', ['user' => $n->visiter_id]) }}">
+                            <img
+                                class="icon-radius"
+                                src="{{ $n->visiter->avatar }}"
+                            >
                             {{ $n->visiter->name }}さん
                         </a>
                             が
@@ -36,6 +40,10 @@
                         @endcomponent
                     @elseif($n->action === 'FollowUser')
                         <a href="{{ route('user.show', ['user' => $n->visiter_id]) }}">
+                            <img
+                                class="icon-radius"
+                                src="{{ $n->visiter->avatar }}"
+                            >
                             {{ $n->visiter->name }}さんにフォローされました
                         </a>
                     @endif

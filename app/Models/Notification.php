@@ -41,7 +41,7 @@ class Notification extends Model
     public function scopeNotificationIndex($query)
     {
         return $query->where('visited_id', Auth::id())
-                    ->with(['quiz', 'visiter:id,name'])
+                    ->with(['quiz', 'visiter'])
                     ->orderBy('created_at', 'DESC');
     }
 
