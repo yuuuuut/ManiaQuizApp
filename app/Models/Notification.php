@@ -130,4 +130,18 @@ class Notification extends Model
         }
     }
 
+    /**
+     * ユーザーのフォロー時に通知を作成
+     * 
+     * @param string $user_id UserId
+     */
+    public static function notifiCreateFollow($user_id)
+    {
+        self::firstOrCreate([
+            'visiter_id' => Auth::id(),
+            'visited_id' => $user_id,
+            'action' => 'FollowUser',
+        ]);
+    }
+
 }

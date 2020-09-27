@@ -11,7 +11,7 @@
                 <li class="list-group-item">
                     @if($n->action === 'AnswerStore')
                         <a href="{{ route('user.show', ['user' => $n->visiter_id]) }}">
-                            {{ $n->visiter->name }}
+                            {{ $n->visiter->name }}さん
                         </a>
                             が
                         <a href="{{ route('quiz.show', ['quiz' => $n->quiz_id]) }}">
@@ -34,6 +34,10 @@
                         @component('components.quiz_list',
                             ['quiz' => $n->quiz])
                         @endcomponent
+                    @elseif($n->action === 'FollowUser')
+                        <a href="{{ route('user.show', ['user' => $n->visiter_id]) }}">
+                            {{ $n->visiter->name }}さんにフォローされました
+                        </a>
                     @endif
                     <div class="float-right">
                         {{ $n->created_at->diffForHumans() }}

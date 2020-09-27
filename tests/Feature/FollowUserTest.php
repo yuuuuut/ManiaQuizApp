@@ -63,6 +63,12 @@ class FollowUserTest extends TestCase
             'follow_id' => $user->id,
         ]);
 
+        $this->assertDatabaseHas('notifications', [
+            'visiter_id' => Auth::id(),
+            'visited_id' => $user->id,
+            'action' => 'FollowUser',
+        ]);
+
         return $user;
     }
 
