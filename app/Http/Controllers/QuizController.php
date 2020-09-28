@@ -15,7 +15,7 @@ class QuizController extends Controller
     {
         $category_id = $request->category_id;
 
-        $quizzes = Quiz::categoryAt($category_id)->paginate(3);
+        $quizzes = Quiz::categoryAt($category_id)->paginate(10);
 
         return view('quiz.index', [
             'quizzes' => $quizzes,

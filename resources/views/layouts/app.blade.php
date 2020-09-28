@@ -31,6 +31,9 @@
                 class="position-absolute"
                 style="right: 130px;"
             >
+                <a href="{{ route('quiz.search') }}">
+                    <i class="fas fa-search fa-2x mr-5 text-white"></i>
+                </a>
                 <a href="{{ route('notifi.index') }}">
                     @if(Auth::user()->isNoCkeckNotification())
                         <span class="position-absolute pl-3 text-primary">
