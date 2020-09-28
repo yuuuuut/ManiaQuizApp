@@ -19,10 +19,10 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('quiz/create', 'QuizController@create')->name('quiz.create');
     Route::post('quizzes', 'QuizController@store')->name('quiz.store');
+    Route::get('/quiz/{quiz}', 'QuizController@show')->name('quiz.show');
+    Route::get('/quiz/search', 'QuizSearchController@index')->name('quiz.search');
 });
 Route::get('/', 'QuizController@index')->name('quiz.index');
-Route::get('/quiz/search', 'QuizSearchController@index')->name('quiz.search');
-Route::get('/quiz/{quiz}', 'QuizController@show')->name('quiz.show');
 /*
 |--------------------------------------------------------------------------
 | Answer
