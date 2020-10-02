@@ -65,6 +65,12 @@
                     >
                         <a
                             class="dropdown-item"
+                            href="{{ route('quiz.create') }}"
+                        >
+                            投稿
+                        </a>
+                        <a
+                            class="dropdown-item"
                             href="{{ route('category.index') }}"
                         >
                             カテゴリー一覧

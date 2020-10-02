@@ -49,7 +49,5 @@ class QuizController extends Controller
         Quiz::create($request->all());
 
         Performance::addNumberOfQuizzes();
-
-        return redirect('/');
     }
 }

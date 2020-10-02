@@ -26,6 +26,7 @@ class CreateQuizRequest extends FormRequest
         return [
             'content' => 'required|max:200',
             'level' => 'required|integer|between:1,5',
+            'category_id' => 'required'
         ];
     }
 
@@ -34,6 +35,7 @@ class CreateQuizRequest extends FormRequest
         return [
             'content'  => '問題文',
             'level' => '難易度',
+            'category_id' => 'カテゴリー'
         ];
     }
 }

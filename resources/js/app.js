@@ -18,6 +18,7 @@ Vue.component('level-component', require('./components/LevelComponent.vue').defa
 Vue.component('quizstatus-component', require('./components/QuizStatusComponent.vue').default);
 Vue.component('category-component', require('./components/CategoryComponent.vue').default);
 Vue.component('user-follow', require('./components/UserFollowComponent.vue').default);
+Vue.component('quiz-create', require('./components/QuizCreateComponent.vue').default);
 
 const app = new Vue({
     el: '#app',

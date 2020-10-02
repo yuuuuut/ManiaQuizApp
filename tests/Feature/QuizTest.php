@@ -115,10 +115,8 @@ class QuizTest extends TestCase
             'level'       => 3,
         ];
 
-        $response = $this->post(route('quiz.store'), $data);
-        $response->assertStatus(302)
-            ->assertRedirect('/');
-        
+        $response = $this->json('POST' ,route('quiz.store'), $data);
+
         $this->assertEquals(1, Quiz::count());
         $this->assertDatabaseHas('quizzes', [
             'user_id'     => $user->id,
