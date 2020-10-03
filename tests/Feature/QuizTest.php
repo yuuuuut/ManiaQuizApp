@@ -60,6 +60,15 @@ class QuizTest extends TestCase
     /**
      * @test
      */
+    public function Rankingページにアクセスできる()
+    {
+        $response = $this->get(route('quiz.ranking'));
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
     public function Showページにアクセスできる()
     {
         $user = User::first();

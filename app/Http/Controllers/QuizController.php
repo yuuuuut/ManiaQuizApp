@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\CreateQuizRequest;
 
 use App\Models\Quiz;
@@ -25,6 +26,8 @@ class QuizController extends Controller
 
     public function show(Quiz $quiz)
     {
+        Redis::zincrby("PV", 1, $quiz->id);
+
         $is_auth_answer = $quiz->auth_answer;
         $best_answer    = $quiz->getBestAnswer($quiz);
 

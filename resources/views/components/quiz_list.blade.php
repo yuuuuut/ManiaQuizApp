@@ -41,7 +41,8 @@
         <div class="text-center">
             @if (Request::is("/") ||
                 Request::is("*user*") ||
-                Request::is("*category*")
+                Request::is("*category*") ||
+                Request::is("*ranking*") 
                 )
                 @if($quiz->user_id === Auth::id() || $quiz->finish == 1)
                     <a

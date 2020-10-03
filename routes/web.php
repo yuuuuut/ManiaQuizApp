@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth']], function() {
 |--------------------------------------------------------------------------
 */
 Route::get('/', 'QuizController@index')->name('quiz.index');
+Route::get('/quiz/ranking', 'QuizPVController@index')->name('quiz.ranking');
 Route::group(['middleware' => ['auth']], function() {
     Route::get('quiz/search', 'QuizSearchController@index')->name('quiz.search');
     Route::get('/quiz/{quiz}', 'QuizController@show')->where('quiz', '[0-9]+')->name('quiz.show');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
@@ -104,5 +105,23 @@ class Quiz extends Model
             $query->where('category_id', $category_id);
         }
         return $query;
+    }
+
+    /**
+     * QuizのPVランキングリストの取得
+     * 
+     * @return Collection
+     */
+    public static function getQuizRank()
+    {
+        $rank_data = Redis::command('ZREVRANGE',["PV", 0, 4, "WITHSCORES"]);
+        $list = [];
+
+        foreach($rank_data as $key => $val) {
+            $quiz = collect(self::find($key));
+            $list[] = $quiz->merge(['count' => $val]);
+        }
+
+        return $list;
     }
 }
