@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
@@ -104,13 +105,31 @@ class Quiz extends Model
         if (!empty($category_id)) {
             $query->where('category_id', $category_id);
         }
+
         return $query;
+    }
+
+    /**
+     * CookieでQuizのIDを取得
+     * 
+     * @return Object
+     */
+    public static function getQuizCookie()
+    {
+        if (Cookie::get('history')) {
+            $quiz_id = Cookie::get('history');
+            $quiz = self::find($quiz_id);
+        } else {
+            $quiz = false;
+        }
+
+        return $quiz;
     }
 
     /**
      * QuizのPVランキングリストの取得
      * 
-     * @return Collection
+     * @return Array
      */
     public static function getQuizRank()
     {

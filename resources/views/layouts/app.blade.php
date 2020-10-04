@@ -75,6 +75,12 @@
                         >
                             カテゴリー一覧
                         </a>
+                        <a
+                            class="dropdown-item"
+                            href="{{ route('quiz.ranking') }}"
+                        >
+                            PVランキング
+                        </a>
                         <div class="dropdown-divider"></div>
                         <a
                             class="dropdown-item"
